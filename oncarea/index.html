@@ -62,7 +62,7 @@ sup a:hover{text-decoration:underline}
 .nav{position:fixed;inset:0 0 auto 0;z-index:40;color:#fff;transition:background .35s,color .35s,border-color .35s;border-bottom:1px solid transparent}
 .nav.light{background:rgba(255,255,255,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);color:var(--ink);border-color:var(--line)}
 .nav-in{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:60px}
-.nav a.back{justify-self:start;display:inline-flex;gap:8px;align-items:center;text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:2px}
+.nav a.back-old{justify-self:start;display:inline-flex;gap:8px;align-items:center;text-decoration:none;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:2px}
 .word{font-weight:500;letter-spacing:.22em;font-size:14px;text-transform:uppercase}
 .word b{color:var(--accent);font-weight:500}
 .nav .right{justify-self:end;display:flex;gap:12px;align-items:center}
@@ -441,19 +441,49 @@ a.drow:hover .arr{transform:translateX(4px);color:var(--accent)}
 .srcs a:hover{text-decoration:underline}
 .srcs li:target{background:var(--tint)}
 
-/* Glow CTA */
-.glow{position:relative;margin-top:clamp(100px,12vw,170px);min-height:clamp(420px,46vw,560px);display:grid;place-items:center;text-align:center;overflow:hidden;padding-inline:var(--gut)}
-.glow::before{content:"";position:absolute;left:-20%;right:-20%;top:50%;height:clamp(260px,30vw,380px);transform:translateY(-50%);background:
-  radial-gradient(50% 42% at 50% 50%,#0b0a24 0%,#0b0a24 40%,rgba(11,10,36,0) 64%),
-  radial-gradient(60% 50% at 50% 50%,rgba(108,99,255,.95) 30%,rgba(108,99,255,.35) 52%,rgba(108,99,255,0) 72%);
-  filter:blur(18px);animation:breathe 7s ease-in-out infinite}
-@keyframes breathe{50%{transform:translateY(-50%) scaleY(1.08)}}
-.glow .c{position:relative;z-index:1;display:grid;gap:14px;justify-items:center;color:#fff}
-.glow h2{font-size:clamp(28px,3.2vw,44px);color:#fff}
-.glow p{font-size:14px;color:#cfcdf5;max-width:30em}
-.glow .btns{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.glow .btns a{font-size:12.5px;padding:8px 14px;border-radius:4px;text-decoration:none;background:#fff;color:var(--ink)}
-.glow .btns a+a{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5)}
+/* Next case study */
+.nxs{margin-top:clamp(110px,13vw,180px);padding-bottom:clamp(60px,8vw,110px)}
+.nx-line{height:1px;background:var(--ink);transform-origin:left;transition:transform 1.4s var(--ease)}
+.nxs.pre .nx-line{transform:scaleX(0)}
+.nx{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:center;text-decoration:none;color:inherit;padding-top:clamp(24px,3vw,36px)}
+.nx-l{display:grid;gap:clamp(14px,2vw,22px);align-content:start}
+.nx-top{display:flex;justify-content:space-between;gap:12px}
+.nx-top .lab:first-child{display:inline-flex;align-items:center;gap:8px;color:var(--ink)}
+.blink{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25;transform:scale(.7)}}
+.nx-title{font-size:clamp(64px,11vw,176px);letter-spacing:-.06em;line-height:.9;display:flex;flex-wrap:wrap;position:relative;padding-bottom:.08em;width:max-content;max-width:100%}
+.nx-title .ch{display:inline-block;transition:transform .7s var(--ease),color .4s;transition-delay:calc(var(--i) * 28ms)}
+.nxs.pre .nx-title .ch{transform:translateY(60%);opacity:0}
+.nxs .nx-title .ch{opacity:1;transition:transform .9s var(--ease),opacity .9s,color .4s;transition-delay:calc(var(--i) * 45ms)}
+.nx:hover .nx-title .ch{transform:translateY(-10%);color:var(--accent);transition-duration:.45s;transition-delay:calc(var(--i) * 30ms)}
+.nx-title::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:right;transition:transform .7s var(--ease)}
+.nx:hover .nx-title::after{transform:scaleX(1);transform-origin:left}
+.nx-p{font-size:clamp(17px,1.5vw,20px);color:var(--ink2);max-width:28em}
+.nx-tags{display:flex;flex-wrap:wrap;gap:6px}
+.nx-tags .tag{transition:transform .5s var(--ease),opacity .5s}
+.nxs.pre .nx-tags .tag{opacity:0;transform:translateY(10px)}
+.nx-tags .tag:nth-child(2){transition-delay:.08s}.nx-tags .tag:nth-child(3){transition-delay:.16s}
+.nx-go{display:inline-flex;align-items:center;gap:14px;font-size:15px;font-weight:500}
+.nx-circle{position:relative;width:52px;height:52px;border-radius:50%;border:1px solid var(--ink);overflow:hidden;display:block;transition:background .4s,border-color .4s}
+.nx-circle span{position:absolute;inset:0;display:grid;place-items:center;font-size:20px;transition:transform .5s var(--ease)}
+.nx-circle span+span{transform:translateX(-100%);color:#fff}
+.nx:hover .nx-circle{background:var(--accent);border-color:var(--accent)}
+.nx:hover .nx-circle span:first-child{transform:translateX(100%)}
+.nx:hover .nx-circle span+span{transform:none}
+.nx-img{background:var(--tint);border-radius:6px;padding:clamp(18px,3vw,40px);perspective:900px;overflow:hidden}
+.nx-img .frame{transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(0);transition:transform .5s var(--ease),box-shadow .5s;will-change:transform}
+.nx:hover .nx-img .frame{box-shadow:0 50px 90px -40px rgba(24,20,48,.45),0 18px 30px -18px rgba(24,20,48,.25)}
+.nx-img img{transition:transform 1.2s var(--ease)}
+.nx:hover .nx-img img{transform:scale(1.04)}
+.nxs.pre .nx-img{clip-path:inset(0 0 100% 0)}
+.nx-img{clip-path:inset(0 0 0 0);transition:clip-path 1.2s var(--ease) .15s}
+.nx-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:clamp(28px,4vw,48px);padding-top:18px;border-top:1px solid var(--line)}
+.portfolio{justify-self:start;display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:13.5px;font-weight:500;padding:7px 14px 7px 8px;border-radius:999px;background:var(--soft);transition:background .3s}
+.portfolio .pa{width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:13px;transition:transform .4s var(--ease),background .3s}
+.portfolio:hover{background:var(--soft2)}
+.portfolio:hover .pa{transform:translateX(-3px);background:var(--accent)}
+@media (max-width:860px){.nx{grid-template-columns:minmax(0,1fr)}.nx-img{order:-1}}
+@media (max-width:420px){.portfolio .pt{font-size:0}.portfolio .pt::after{content:"Portfolio";font-size:13px}}
 
 /* Footer */
 .foot{background:var(--soft);overflow:hidden}
@@ -591,7 +621,7 @@ a.drow:hover .arr{transform:translateX(4px);color:var(--accent)}
 
 <header class="nav light" id="nav">
   <div class="in nav-in">
-    <a class="back" href="../" aria-label="All case studies">← <span>All work</span></a>
+    <a class="portfolio" href="https://uxabhi.com"><span class="pa" aria-hidden="true">←</span><span class="pt">Back to portfolio</span></a>
     <div class="word">Onc<b>a</b>rea</div>
     <div class="right"><span class="step" id="step">00 / 12</span><button class="pill" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">Chapters <i aria-hidden="true"></i></button></div>
   </div>
@@ -771,13 +801,24 @@ a.drow:hover .arr{transform:translateX(4px);color:var(--accent)}
 </section>
 </main>
 
-<section class="glow">
-  <div class="c"><span class="lab" style="color:#c9c8f0">Next case study</span><h2>Germanly</h2><p>Why people fail at languages with apps built for retention, and what I changed.</p><div class="btns"><a href="../germanly/">Read Germanly</a><a href="../">All case studies</a></div></div>
+<section class="in nxs rv" id="next">
+  <div class="nx-line" aria-hidden="true"></div>
+  <a class="nx" href="../germanly/" aria-label="Next case study: Germanly">
+    <div class="nx-l">
+      <div class="nx-top"><span class="lab"><i class="blink" aria-hidden="true"></i>Next case study</span><span class="lab">01 · 2026</span></div>
+      <h2 class="nx-title" aria-hidden="true">Germanly</h2>
+      <p class="nx-p">Why people fail at languages with apps built for retention, and what I changed.</p>
+      <div class="nx-tags"><span class="tag">120+ learners</span><span class="tag">CHI 2027 under review</span><span class="tag">13 weeks</span></div>
+      <span class="nx-go"><span class="nx-circle" aria-hidden="true"><span>→</span><span>→</span></span>Read the case study</span>
+    </div>
+    <figure class="nx-img"><div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>mygermanly.com</span></div><img src="../germanly/motion/landing_poster.webp" alt="" loading="lazy"></div></figure>
+  </a>
+  <div class="nx-links"><a class="pill" href="https://uxabhi.com">Back to portfolio <i aria-hidden="true"></i></a><a class="pill" href="../">All case studies <i aria-hidden="true"></i></a></div>
 </section>
 
 <footer class="foot">
   <div class="in">
-    <div class="grid"><p>Designing for the moment<br>a doctor has to decide.</p><ul><li><a href="#top">Overview</a></li><li><a href="#research">Research</a></li><li><a href="#decisions">Decisions</a></li><li><a href="#style">Style guide</a></li></ul><ul><li><a href="../">All case studies</a></li><li><a href="../germanly/">Germanly</a></li><li><a href="#top">Back to top ↑</a></li></ul></div>
+    <div class="grid"><p>Designing for the moment<br>a doctor has to decide.</p><ul><li><a href="#top">Overview</a></li><li><a href="#research">Research</a></li><li><a href="#decisions">Decisions</a></li><li><a href="#style">Style guide</a></li></ul><ul><li><a href="https://uxabhi.com">Back to portfolio</a></li><li><a href="../">All case studies</a></li><li><a href="../germanly/">Germanly</a></li><li><a href="#top">Back to top ↑</a></li></ul></div>
     <div class="wm" aria-hidden="true">Oncarea</div>
     <div class="base"><span class="lab">Abhishek Jha · Product and UX Designer</span><span class="lab">Case study 02 · 2023</span></div>
   </div>
@@ -935,6 +976,15 @@ $('#learn').innerHTML = D.learnings.map(([k, b, p]) => `<div class="feat rv"><di
 /* FAQ and sources */
 /* FAQ removed: the two questions are told as stories near the top */
 $('#srcs').innerHTML = D.sources.map((s, i) => s ? `<li id="s${i}"><span>${i}</span><a href="${esc(s[1])}" target="_blank" rel="noopener">${esc(s[0])} ↗</a></li>` : '').join('');
+
+
+/* Next case study: letters and tilt */
+const nt = $('.nx-title'); nt.innerHTML = [...nt.textContent].map((c, i) => `<span class="ch" style="--i:${i}">${esc(c)}</span>`).join('');
+const nxi = $('.nx-img'), nxf = $('.nx-img .frame');
+if (!reduce && matchMedia('(hover:hover)').matches){
+  nxi.addEventListener('mousemove', e => { const r = nxi.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; nxf.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg'); nxf.style.setProperty('--rx', (-y * 6).toFixed(2) + 'deg'); });
+  nxi.addEventListener('mouseleave', () => { nxf.style.setProperty('--ry', '0deg'); nxf.style.setProperty('--rx', '0deg'); });
+}
 
 /* Menu */
 const mb = $('#menuBtn'), menu = $('#menu');

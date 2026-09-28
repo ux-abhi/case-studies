@@ -49,6 +49,12 @@ ul{margin:0;padding:0;list-style:none}
 .nav-in{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:14px}
 .back{width:42px;height:42px;border-radius:13px;background:var(--soft);display:grid;place-items:center;text-decoration:none;flex:none;transition:transform .3s var(--ease),background .3s}
 .back:hover{transform:translateX(-3px);background:var(--soft2)}
+.portfolio{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:14px;font-weight:500;padding:7px 14px 7px 8px;border-radius:999px;background:var(--soft);flex:none;transition:background .3s}
+.portfolio .pa{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:13px;transition:transform .4s var(--ease),background .3s}
+.portfolio:hover{background:var(--soft2)}
+.portfolio:hover .pa{transform:translateX(-3px);background:var(--accent)}
+@media (max-width:1100px){.who{display:none}}
+@media (max-width:420px){.portfolio .pt{font-size:0}.portfolio .pt::after{content:"Portfolio";font-size:13px}}
 .who{font-weight:700;font-size:15px;line-height:1.2}
 .who small{display:block;font-weight:400;color:var(--muted);font-size:12px}
 .links{margin-left:auto;display:flex;gap:2px}
@@ -653,7 +659,7 @@ details.more[open] summary{margin-bottom:14px}
 
 <header class="nav" id="nav">
   <div class="nav-in">
-    <a class="back" href="../" aria-label="All case studies"><svg width="20" height="20" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M23 13H4M11 5l-8 8 8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <a class="portfolio" href="https://uxabhi.com"><span class="pa" aria-hidden="true">←</span><span class="pt">Back to portfolio</span></a>
     <div class="who">Abhishek Jha<small>Case study 01 · Germanly</small></div>
     <nav class="links" aria-label="Chapters">
       <a href="#why">Why it fails</a><a href="#people">People</a><a href="#changes">What changes</a><a href="#blueprint">Blueprint</a><a href="#decisions">Decisions</a><a href="#system">Style guide</a><a href="#proof">Proof</a>
@@ -851,7 +857,7 @@ details.more[open] summary{margin-bottom:14px}
   <div class="end-in">
     <span class="label" style="color:rgba(255,255,255,.85)">Learn your first German word in five seconds</span>
     <a class="go" href="https://www.mygermanly.com" target="_blank" rel="noopener"><span>Try Germanly</span><span class="arr" aria-hidden="true">→</span></a>
-    <div class="row"><span>Abhishek Jha · Product and UX Designer · 2026</span><span style="display:flex;gap:18px;flex-wrap:wrap"><a href="../">All case studies</a><a href="paper/">Research paper</a><a href="#top">Back to top</a></span></div>
+    <div class="row"><span>Abhishek Jha · Product and UX Designer · 2026</span><span style="display:flex;gap:18px;flex-wrap:wrap"><a href="https://uxabhi.com">Back to portfolio</a><a href="../">All case studies</a><a href="paper/">Research paper</a><a href="#top">Back to top</a></span></div>
   </div>
 </footer>
 
