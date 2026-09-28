@@ -374,10 +374,10 @@ window.GERMANLY = {
   },
 
   fieldwork: [
-    { src: "images/research/workshop_intro.webp", caption: "Opening the workshop", note: "Setting the scene before the first activity" },
-    { src: "images/research/workshop_cards.webp", caption: "Card sorting in small groups", note: "Participants grouped and ranked what they need from a learning tool" },
+    { src: "images/research/workshop_intro.webp", caption: "Opening the workshop", note: "Welcoming participants before the first activity" },
     { src: "images/research/workshop_timer.webp", caption: "Timed rounds", note: "Two minute rounds kept each group moving and every voice heard" },
-    { src: "images/research/workshop_feedback.webp", caption: "Feedback on the live product", note: "What was confusing, if anything? asked with the product open on laptops" }
+    { src: "images/research/workshop_feedback.webp", caption: "Feedback on the live product", note: "What was confusing, if anything? asked with the product open on laptops" },
+    { src: "images/research/workshop_cards.webp", caption: "Card sorting in small groups", note: "Participants grouped and ranked what they need from a learning tool" }
   ],
 
   toolkit: [
