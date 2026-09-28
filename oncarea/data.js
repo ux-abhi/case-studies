@@ -350,13 +350,30 @@ window.ONCAREA = {
     ]
   },
 
-  faq: [
-    ["Why not let the AI diagnose? It would scale faster.", "Because the evidence and the law point the same way. The best field AI still missed more than one in eight suspicious lesions, people over rely on automated advice, and India's telemedicine guidelines only allow AI to aid a registered practitioner. Scale without trust would not have been used by the doctors we met."],
-    ["Doesn't hiding results from patients take away their autonomy?", "Patients keep the choice to see a doctor and ask anything. What they do not get is an unexplained machine output. Patients themselves asked for guidance over conclusions, and research on online test results shows abnormal results seen alone increase worry."],
-    ["Was this tested with real users?", "Designs were iterated through testing and feedback with doctors to match clinical practice. The project ended at design, not a field rollout, so I have no field metrics. The pilot metrics I would track are listed above, each tied to a decision."],
-    ["Why a dark interface for the app?", "It keeps the camera preview and the single purple action as the brightest things on the screen, so attention goes where the task is. It is a choice I would validate in a pilot."],
-    ["What would you do differently?", "Bring a health worker persona in earlier. Much of the capture in real programmes is done by frontline workers, and designing for them first would have sharpened the scan flow."]
-  ],
+  /* Two questions, told as a story. Beats are cited; Rohan is our persona. */
+  rural: {
+    q: "Why do rural areas have more oral cancer patients?",
+    lede: "Follow one person through a rural year. None of the steps is rare. Together they explain why so many patients are found late.",
+    beats: [
+      { t: "It starts with a habit", p: "Gutka, khaini, betel quid and beedi are part of daily life in many villages. Smokeless tobacco is the habit most tied to oral cancer in India.", n: "24.6%", f: "of rural adults use smokeless tobacco, against 15.2% in cities", src: 4 },
+      { t: "Nobody calls it dangerous", p: "Fewer people in villages have heard of oral cancer, and fewer know tobacco causes it. A white or red patch in the mouth does not sound like an emergency.", n: "65%", f: "of rural respondents had heard of oral cancer, against 90% in cities, in one survey", src: 16 },
+      { t: "Nobody checks", p: "A mouth can be examined in a minute with a light and a trained eye. Almost nobody in rural India has had that minute.", n: "1.3%", f: "of rural men aged 30 to 49 have ever been screened for oral cancer. For rural women it is 0.77%", src: 17 },
+      { t: "The specialist is far away", p: "Rural health centres are meant to have specialists. Most posts are empty, so the nearest person who can judge a lesion is often a long trip away.", n: "79.5%", f: "shortfall of specialists at rural community health centres", src: 5 },
+      { t: "The camp comes, and goes", p: "Screening arrives as an outreach camp for a few days. People found with a lesion are told to go to a hospital in the city. Most do not.", n: "22%", f: "of people with lesions in one rural camp study reached the referral hospital", src: 12 },
+      { t: "By then, it is late", p: "When the patient finally reaches a specialist, the cancer has had years to grow. The stage it is found at decides almost everything.", n: "70%", f: "of oral cancer patients in one Indian study were diagnosed at an advanced stage. Survival falls from 80 to 90% to 50 to 60%", src: 2 }
+    ]
+  },
+  helps: {
+    q: "How does Oncarea help?",
+    lede: "Now run the same story through Oncarea. We cannot change the habit or the distance. We can make the one day of the camp count, and keep the thread alive after it.",
+    beats: [
+      { t: "The doctor starts the case at the camp", p: "The doctor adds Rohan on site and records his habits, pain and the 3 finger trismus test before anything else. The context never gets lost.", img: "p_habits", d: "d2", fix: "Nobody checks" },
+      { t: "The phone checks itself before the scan", p: "An 8MP camera and proper lighting are confirmed first, then a mouth overlay guides every angle. A bad photo is caught while Rohan is still in the chair.", img: "p_scan", d: "d3", fix: "The camp comes, and goes" },
+      { t: "A specialist sees it without the trip", p: "The images and context sync to the dashboard, where a doctor reviews them with AI quality and pattern cues. The distance to a specialist becomes an upload.", img: "web_samples", d: "d6", fix: "The specialist is far away" },
+      { t: "Rohan hears from a person, not a score", p: "He never sees raw AI output. The next thing he hears is guidance from a doctor: what to do and why, which is also where tobacco advice lands.", img: "p_added", d: "d5", fix: "Nobody calls it dangerous" },
+      { t: "Follow up without a second journey", p: "If the doctor wants to see him again, it is a video session in a slot the doctor already set. No city hospital, no lost referral slip.", img: "d_appts", d: "d9", fix: "By then, it is late" }
+    ]
+  },
 
   learnings: [
     ["1.0", "In healthcare, restraint is a feature", "The most important work was deciding what the patient should not see, and what the AI should not decide."],
@@ -381,6 +398,8 @@ window.ONCAREA = {
     ["Reasons for non compliance of patients to attend referral hospital after screening for oral pre cancer lesions through camp approach in rural India", "https://pubmed.ncbi.nlm.nih.gov/24349853/"],
     ["Compliance with specialist referral for increased cancer risk in low resource settings: in person vs telehealth, Cancers (2023)", "https://doi.org/10.3390/cancers15102775"],
     ["Establishing a normal range for mouth opening: its use in screening for oral submucous fibrosis", "https://www.sciencedirect.com/science/article/abs/pii/S0266435697900073"],
-    ["The Digital Personal Data Protection Act, 2023, Government of India", "https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf"]
+    ["The Digital Personal Data Protection Act, 2023, Government of India", "https://www.meity.gov.in/static/uploads/2024/06/2bf1f0e9f04e6fb4f8fef35e82c42aa5.pdf"],
+    ["Oral cancer awareness and screening practices in urban versus rural Indian population: web based survey", "https://pmc.ncbi.nlm.nih.gov/articles/PMC12357727/"],
+    ["Oral cancer screening in India: insights from the National Family Health Survey 5, Journal of Family Medicine and Primary Care", "https://pubmed.ncbi.nlm.nih.gov/41280578/"]
   ]
 };
