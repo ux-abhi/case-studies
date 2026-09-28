@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700;800&family=Space+Grotesk:wght@500&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700;800&family=Space+Grotesk:wght@500&family=Space+Mono:wght@400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;700&display=swap">
 <style>
 :root{
   color-scheme:light;
@@ -19,7 +19,8 @@
   --s-germanly:#E0541C; --s-duo:#2F6FB8;
   --shadow:0 40px 80px -40px rgba(30,24,16,.28),0 14px 28px -18px rgba(30,24,16,.18);
   --sans:"Satoshi","Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
-  --mono:"Space Mono",ui-monospace,Menlo,monospace;
+  --mono:"DM Sans","Helvetica Neue",Arial,sans-serif;
+  --code:"JetBrains Mono",ui-monospace,Menlo,monospace;
   --ease:cubic-bezier(.2,.8,.2,1);
   --gut:clamp(16px,4vw,56px);
 }
@@ -33,7 +34,7 @@ img,video{max-width:100%}
 h1,h2,h3,h4{margin:0;font-weight:500;letter-spacing:-.035em;line-height:1.02;text-wrap:balance}
 p{margin:0}
 ul{margin:0;padding:0;list-style:none}
-.label{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.label{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .muted{color:var(--muted)}
 
 /* Reveal and motion helpers (content stays visible unless JS marks it as below the fold) */
@@ -86,7 +87,7 @@ ul{margin:0;padding:0;list-style:none}
 .frame-bar{display:flex;align-items:center;gap:7px;height:36px;padding:0 14px;background:#1C1C1A}
 .frame-bar i{width:10px;height:10px;border-radius:50%;background:#FF5F57}
 .frame-bar i:nth-child(2){background:#FEBC2E}.frame-bar i:nth-child(3){background:#28C840}
-.frame-bar span{margin-left:14px;flex:1;max-width:340px;height:22px;border-radius:7px;background:#2A2A27;color:#9D9C95;font-family:var(--mono);font-size:11px;display:flex;align-items:center;padding-inline:10px;overflow:hidden;white-space:nowrap}
+.frame-bar span{margin-left:14px;flex:1;max-width:340px;height:22px;border-radius:7px;background:#2A2A27;color:#9D9C95;font-family:var(--code);font-size:11px;display:flex;align-items:center;padding-inline:10px;overflow:hidden;white-space:nowrap}
 .frame video,.frame img{display:block;width:100%;height:auto}
 
 /* Marquee */
@@ -118,7 +119,7 @@ ul{margin:0;padding:0;list-style:none}
 .ch{padding-block:clamp(96px,12vw,170px) 0;display:grid;gap:clamp(36px,5vw,64px)}
 .ch-head{display:grid;grid-template-columns:260px minmax(0,1fr);gap:clamp(20px,4vw,64px);align-items:start}
 .ch-head .l{display:grid;gap:4px;padding-top:12px}
-.ch-head .l .n{font-family:var(--mono);font-size:12px;color:var(--accent-ink);letter-spacing:.06em}
+.ch-head .l .n{font-family:var(--mono);font-weight:600;font-size:12px;color:var(--accent-ink);letter-spacing:.1em}
 .ch-head .l .t{font-size:15px;font-weight:700}
 .ch-head h2{font-size:clamp(38px,5.6vw,80px);letter-spacing:-.045em;line-height:.98}
 .body{display:grid;grid-template-columns:260px minmax(0,1fr);gap:clamp(20px,4vw,64px)}
@@ -292,12 +293,12 @@ details.more[open] summary{margin-bottom:14px}
 .sw i{display:block;height:120px}
 .sw div{padding:12px 14px 14px;display:grid;gap:2px}
 .sw b{font-weight:700;font-size:15px}
-.sw code{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.sw code{font-family:var(--code);font-size:11px;color:var(--muted)}
 .sw p{color:var(--ink2);font-size:13px;line-height:1.4;margin-top:4px}
 .types{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px}
 .typecard{border-radius:20px;background:var(--soft);padding:26px;display:grid;gap:10px}
 .typecard .g{font-family:"Space Grotesk",var(--sans);font-weight:500;font-size:clamp(44px,5vw,66px);line-height:1;letter-spacing:-.03em}
-.typecard .m{font-family:var(--mono);font-size:clamp(24px,2.6vw,32px)}
+.typecard .m{font-family:"Space Mono",ui-monospace,monospace;font-size:clamp(24px,2.6vw,32px)}
 .typecard .art{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
 .typecard .art b{font-weight:500;padding:5px 13px;border-radius:999px;font-size:15px;border:1.5px solid currentColor}
 .rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--ink)}
@@ -330,13 +331,13 @@ details.more[open] summary{margin-bottom:14px}
 .eplist button{font:inherit;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);padding:16px 18px;cursor:pointer;color:var(--ink2);display:grid;gap:3px;transition:background .2s}
 .eplist button:hover{background:var(--soft2)}
 .eplist button[aria-selected="true"]{background:var(--bg);color:var(--ink);box-shadow:inset 3px 0 0 var(--accent)}
-.eplist button span{font-family:var(--mono);font-size:11px;color:var(--muted);word-break:break-all}
+.eplist button span{font-family:var(--code);font-size:11px;color:var(--muted);word-break:break-all}
 .eplist button b{font-weight:700;font-size:15px}
 .epview{padding:22px;display:grid;gap:14px;min-width:0}
-.epview pre{margin:0;background:#111110;color:#E9E7E1;border-radius:14px;padding:18px;font-family:var(--mono);font-size:12.5px;line-height:1.65;overflow-x:auto;animation:fadeup .4s var(--ease)}
+.epview pre{margin:0;background:#111110;color:#E9E7E1;border-radius:14px;padding:18px;font-family:var(--code);font-size:12.5px;line-height:1.65;overflow-x:auto;animation:fadeup .4s var(--ease)}
 @keyframes fadeup{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .epview pre .k{color:#F3A073}.epview pre .s{color:#A8D5A0}.epview pre .n{color:#8DB5F0}
-.meth{font-family:var(--mono);font-size:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.meth{font-family:var(--code);font-size:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .meth b{background:var(--accent);color:var(--on-accent);padding:3px 8px;border-radius:6px;font-weight:700}
 .lessonnote{background:var(--mint);border-radius:14px;padding:16px 18px;font-size:15.5px;line-height:1.5;display:grid;gap:6px}
 
@@ -421,6 +422,37 @@ details.more[open] summary{margin-bottom:14px}
 .toolrow span{font-size:14.5px;color:var(--ink2);line-height:1.45}
 @media (max-width:860px){.reversal{grid-template-columns:minmax(0,1fr)}.toolrow{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 0}.toolrow div:nth-child(3){padding-left:0;border-left:0}}
 @media (max-width:520px){.toolrow{grid-template-columns:minmax(0,1fr)}.toolrow div+div{padding-left:0;border-left:0}}
+
+/* Chapter 5: week track and phases */
+.wk{display:grid;gap:12px;margin-top:30px}
+.wk-bar{position:relative;height:60px;border-radius:18px;background:var(--soft)}
+.wk-fill{position:absolute;inset:0;border-radius:18px;background:var(--soft2);transform-origin:left;transition:transform 1.6s var(--ease) .1s}
+.wk.pre .wk-fill{transform:scaleX(0)}
+.wk-seg{position:absolute;top:8px;bottom:8px;border-radius:12px;background:var(--bg);box-shadow:0 1px 0 var(--line),0 6px 16px -10px rgba(0,0,0,.25);display:flex;align-items:center;padding-inline:14px;overflow:hidden;transition:transform .9s var(--ease),opacity .9s}
+.wk-seg em{font-style:normal;font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wk-seg.b{background:var(--accent);color:var(--on-accent);transition-delay:.25s}
+.wk-seg.c{background:var(--dark);color:var(--on-dark);transition-delay:.5s}
+.wk.pre .wk-seg{transform:translateY(8px);opacity:0}
+.wk-pin{position:absolute;bottom:100%;transform:translateX(-50%);display:grid;justify-items:center;gap:4px;padding-bottom:4px;pointer-events:none}
+.wk-pin.wk-end{transform:translateX(-85%);justify-items:end}
+.wk-pin b{font-family:var(--mono);font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;color:var(--accent-ink)}
+.wk-pin::after{content:"";width:1.5px;height:14px;background:var(--accent)}
+.wk-pin.wk-end::after{margin-right:15%}
+.wk-ticks{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:center}
+.phases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ph{border-radius:24px;padding:26px;display:grid;gap:20px;grid-template-rows:auto 1fr auto;background:var(--soft);transition:transform .5s var(--ease),opacity .9s var(--ease)}
+.ph:hover{transform:translateY(-6px)}
+.ph.pre{transform:translateY(32px)}
+.ph:nth-child(2){background:var(--peach)}
+.ph:nth-child(3){background:var(--dark);color:var(--on-dark)}
+.ph:nth-child(3) .label,.ph:nth-child(3) .ph-d,.ph:nth-child(3) li{color:var(--on-dark2)}
+.ph:nth-child(3) .pill{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:var(--on-dark2)}
+.ph-top{display:grid;gap:8px}
+.ph h3{font-size:clamp(28px,2.8vw,38px);letter-spacing:-.035em}
+.ph-d{font-size:16px;color:var(--ink2);line-height:1.45}
+.ph ul{display:grid;border-top:1px solid rgba(128,128,120,.28);align-content:start}
+.ph li{font-size:15px;line-height:1.45;color:var(--ink2);padding:12px 0;border-bottom:1px solid rgba(128,128,120,.18)}
+@media (max-width:860px){.phases{grid-template-columns:minmax(0,1fr)}.wk-ticks span:nth-child(even){visibility:hidden}.wk-seg em{display:none}}
 
 @media (max-width:1100px){
   .ch-head,.body,.side2{grid-template-columns:minmax(0,1fr)}
@@ -541,8 +573,9 @@ details.more[open] summary{margin-bottom:14px}
   <section class="ch" id="process">
     <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 05</span><span class="t">Thirteen weeks</span></div><h2>From a Notion page to 120 learners.</h2></div>
     <div class="body"><div></div><div>
-      <div class="fanwrap rv"><div class="fan" id="fan"></div></div>
-      <div class="tl" id="tl"></div>
+      <p class="big scrub">Three phases, one designer. I researched before I built, launched as soon as the path worked, and let what learners did after launch decide the redesign.</p>
+      <div class="wk rv" id="wk" aria-label="Thirteen week timeline"></div>
+      <div class="phases" id="phases"></div>
     </div></div>
   </section>
 
@@ -653,7 +686,7 @@ function loop(id, steps, dark, dur){
     s += `<rect x="${x0}" y="${y - 15}" width="${wd}" height="30" rx="15" fill="${chip}" stroke="${line}"/><text x="${x0 + wd / 2}" y="${y + 4.5}" text-anchor="middle" fill="${ink}" font-size="13" font-family="Satoshi, Hanken Grotesk, sans-serif" font-weight="500">${esc(t)}</text>`;
   });
   s += `<circle r="7" fill="var(--accent)" cx="${reduce ? cx : 0}" cy="${reduce ? cy - ry : 0}">${reduce ? '' : `<animateMotion dur="${dur}s" repeatCount="indefinite" path="M${cx},${cy - ry} a${rx},${ry} 0 1,1 0,${2 * ry} a${rx},${ry} 0 1,1 0,${-2 * ry}"/>`}</circle>`;
-  s += `<text x="${cx}" y="${cy + 5}" text-anchor="middle" fill="${dark ? 'var(--on-dark2)' : 'var(--muted)'}" font-size="12" font-family="Space Mono, monospace">${dark ? 'slower, it sticks' : 'fast, it fades'}</text>`;
+  s += `<text x="${cx}" y="${cy + 5}" text-anchor="middle" fill="${dark ? 'var(--on-dark2)' : 'var(--muted)'}" font-size="12" font-family="DM Sans, sans-serif">${dark ? 'slower, it sticks' : 'fast, it fades'}</text>`;
   $('#' + id).innerHTML = s;
 }
 loop('loopA', ['Reminder', 'Open the app', 'Tap tiles', 'XP and streak'], false, 3.2);
@@ -689,9 +722,13 @@ const SHIFTS = [
 $('#shifts').innerHTML = SHIFTS.map(s => `<div class="shift"><span class="from">${s[0]}</span><span class="ar" aria-hidden="true">→</span><div class="to">${s[1]}<small>${s[2]}</small></div></div>`).join('');
 
 /* Process */
-$('#fan').innerHTML = D.process.map(p => `<article class="pcard ${p.tone}"><header>${esc(p.title)}</header><div class="in"><p>${esc(p.body)}</p>${p.strong ? `<p class="strong">${esc(p.strong)}</p>` : ''}<div class="pills">${p.tags.map(t => `<span class="pill">${esc(t)}</span>`).join('')}</div></div></article>`).join('');
-const blobs = ['images/landing_hero.webp', 'images/lesson.webp', 'images/today.webp', 'images/words.webp', 'images/readiness.webp', 'images/chapters.webp'];
-$('#tl').innerHTML = D.timeline.map((t, i) => { const bl = `<span class="blob" aria-hidden="true"><img src="${blobs[i]}" alt="" loading="lazy"></span>`, num = `<span>W${t.start}<small>${t.end > t.start ? 'to W' + t.end : ''}</small></span>`; return `<div class="tl-row"><div class="yr">${i % 2 ? bl + num : num + bl}</div><div class="txt"><b>${esc(t.phase)}</b><p>${esc(t.detail)}</p></div></div>`; }).join('');
+const PH = [
+  { w: 'W1 to W3', t: 'Discover', d: 'Understand the problem before touching a screen.', li: ['Market map and competitor audit', '8 interviews and an affinity map', 'Scope cut from C2 to B2, pay once instead of monthly'], tags: ['Interviews', 'Affinity map', 'Scope'] },
+  { w: 'W3 to W7', t: 'Build and launch', d: 'Ship the smallest path that teaches something real.', li: ['Information architecture and lesson flow', 'Next.js, Supabase and a validated content pipeline', 'Launch post: 3,000+ impressions, 96 signups in June'], tags: ['User flow', 'AI features', 'Launch'] },
+  { w: 'W8 to W13', t: 'Learn and redesign', d: 'Let what learners did decide what changed.', li: ['Signups fell to 13 in July, so I went back to learners', 'Screen audit: 431 controls on one page', 'Tokens, 8 components, new layout live 18 August'], tags: ['Usability testing', 'Design system', 'Redesign'] }
+];
+$('#phases').innerHTML = PH.map((p, i) => `<article class="ph rv" style="transition-delay:${i * 120}ms"><div class="ph-top"><span class="label">Phase ${i + 1} · ${p.w}</span><h3>${p.t}</h3><p class="ph-d">${p.d}</p></div><ul>${p.li.map(x => `<li>${esc(x)}</li>`).join('')}</ul><div class="pills">${p.tags.map(t => `<span class="pill">${t}</span>`).join('')}</div></article>`).join('');
+$('#wk').innerHTML = `<div class="wk-bar"><i class="wk-fill"></i>${[[1, 3, 'a', 'Discover'], [3, 7, 'b', 'Build and launch'], [8, 13, 'c', 'Learn and redesign']].map(([f, t, k, n]) => `<span class="wk-seg ${k}" style="left:calc(${(f - 1) / 13 * 100}% + 4px);width:calc(${(t - f + 1) / 13 * 100}% - 8px)"><em>${n}</em></span>`).join('')}<span class="wk-pin" style="left:${2.5 / 13 * 100}%"><b>Launch</b></span><span class="wk-pin wk-end" style="left:${12.5 / 13 * 100}%"><b>Redesign live</b></span></div><div class="wk-ticks">${Array.from({ length: 13 }, (_, i) => `<span>W${i + 1}</span>`).join('')}</div>`;
 
 /* Decisions */
 const URLS = { D1: 'mygermanly.com', D2: 'mygermanly.com/home', D3: 'mygermanly.com/unit/family', D4: 'mygermanly.com/flashcards', D5: 'mygermanly.com/vocab', D6: 'mygermanly.com/write', D7: 'mygermanly.com/chat', D8: 'mygermanly.com/level/a1' };
@@ -734,7 +771,7 @@ $('#aigrid').innerHTML = D.ai.map((a, i) => `<div class="notch ${i === 3 ? 'dark
     l.items.forEach((it, j) => { s += `<rect x="${x + 12}" y="${y + 48 + j * 44}" width="${W - 24}" height="34" rx="17" fill="${hi ? 'rgba(255,255,255,.18)' : 'var(--soft)'}"/><text x="${x + 24}" y="${y + 70 + j * 44}" fill="${hi ? '#fff' : 'var(--ink2)'}" font-size="12" font-family="Satoshi, Hanken Grotesk, sans-serif">${esc(it.length > 26 ? it.slice(0, 25) + '…' : it)}</text>`; });
     if (i < Ls.length - 1) s += `<path d="M${x + W + 6},${top + 150} H${x + W + gap - 6}" stroke="var(--ink)" stroke-width="1.5" marker-end="url(#ah)"/>`;
   });
-  s += `<text x="8" y="366" fill="var(--muted)" font-size="12" font-family="Space Mono, monospace">Every request passes the session check. Every table has Row Level Security. Every AI call is rate limited.</text>`;
+  s += `<text x="8" y="366" fill="var(--muted)" font-size="12" font-family="DM Sans, sans-serif">Every request passes the session check. Every table has Row Level Security. Every AI call is rate limited.</text>`;
   $('#archSvg').innerHTML = s;
 })();
 function hl(o){ return esc(JSON.stringify(o, null, 2)).replace(/&quot;([^&]+)&quot;:/g, '<span class="k">"$1"</span>:').replace(/: &quot;([^&]*)&quot;/g, ': <span class="s">"$1"</span>').replace(/: (\d[\d.]*|true|false)/g, ': <span class="n">$1</span>'); }
@@ -836,9 +873,8 @@ if (!reduce && 'IntersectionObserver' in window){
     if (t.dataset.count) countUp(t);
     io.unobserve(t);
   }), { threshold: .18, rootMargin: '0px 0px -6% 0px' });
-  $$('.rv, .shift, .theme, .tl-row, .chart, .reversal').forEach(el => { if (below(el)) { el.classList.add('pre'); io.observe(el); } });
+  $$('.rv, .shift, .theme, .chart, .reversal, .wk').forEach(el => { if (below(el)) { el.classList.add('pre'); io.observe(el); } });
   $$('[data-count]').forEach(el => { if (below(el)) io.observe(el); });
-  const fan = $('#fan'); if (below(fan)) { fan.classList.add('folded'); io.observe(fan); }
   const vio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) e.target.play().catch(() => {}); else e.target.pause(); }), { threshold: .3 });
   $$('.dec video').forEach(v => vio.observe(v));
 } else {
