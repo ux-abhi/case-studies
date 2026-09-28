@@ -1,0 +1,883 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oncarea Case Study</title>
+<meta name="description" content="Why rural oral cancer screening breaks long before the AI does, and the doctor led, human in the loop system I designed for Oncarea.">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Poppins:wght@300;400;500;600;700;800&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#FFFFFF; --soft:#F4F4F1; --soft2:#ECEBE7; --ink:#111110; --ink2:#52514C; --muted:#8F8E88; --ghost:#CFCEC8; --line:#E8E7E2;
+  --dark:#171716; --on-dark:#F4F3EF; --on-dark2:#A3A29B;
+  --accent:#6C63FF; --accent-ink:#4B42D6; --on-accent:#FFFFFF;
+  --tint:#EEEDFF; --tint2:#C4C1FF; --mint:#E6EEDF; --sand:#F3EEE6;
+  --app:#191919; --app2:#252528; --app3:#303034;
+  --ok:#21B619; --warn:#FFCC00; --err:#FF7171; --info:#0D8CE9;
+  --shadow:0 40px 80px -40px rgba(24,20,48,.30),0 14px 28px -18px rgba(24,20,48,.18);
+  --sans:"Satoshi","Hanken Grotesk","Helvetica Neue",Arial,sans-serif;
+  --mono:"DM Sans","Helvetica Neue",Arial,sans-serif;
+  --pop:"Poppins","DM Sans",Arial,sans-serif;
+  --ease:cubic-bezier(.2,.8,.2,1);
+  --gut:clamp(16px,4vw,56px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;padding-inline:var(--gut)}
+.wrap{max-width:1280px;margin:0 auto}
+a{color:inherit}
+img{max-width:100%}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+h1,h2,h3,h4{margin:0;font-weight:500;letter-spacing:-.035em;line-height:1.02;text-wrap:balance}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+.label{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+
+/* Reveal helpers: content is complete at rest, JS only hides what is below the fold */
+.rv{transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.pre{opacity:0;transform:translateY(32px)}
+.scrub .w{transition:color .35s}
+.scrub .w.dim{color:var(--ghost)}
+
+/* Nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;margin-inline:calc(-1 * var(--gut));padding:14px var(--gut);background:rgba(255,255,255,.86);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.scrolled{border-color:var(--line)}
+.nav-in{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.back{width:42px;height:42px;border-radius:13px;background:var(--soft);display:grid;place-items:center;text-decoration:none;flex:none;transition:transform .3s var(--ease),background .3s}
+.back:hover{transform:translateX(-3px);background:var(--soft2)}
+.who{font-weight:700;font-size:15px;line-height:1.2}
+.who small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+.links{margin-left:auto;display:flex;gap:2px}
+.links a{text-decoration:none;font-size:14px;color:var(--ink2);padding:8px 12px;border-radius:999px;transition:color .2s,background .2s}
+.links a:hover,.links a.on{color:var(--ink);background:var(--soft)}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--bg);text-decoration:none;font-size:14px;font-weight:500;padding:10px 16px;border-radius:999px;white-space:nowrap}
+.cta .arr{display:inline-block;transition:transform .35s var(--ease)}
+.cta:hover .arr{transform:translateX(3px)}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--accent);transform-origin:left;transform:scaleX(0)}
+.menu-btn{display:none;font:inherit;font-size:14px;font-weight:500;background:var(--soft);border:0;border-radius:999px;padding:10px 14px;cursor:pointer;margin-left:auto;color:var(--ink)}
+.menu{display:none}
+
+/* Hero */
+.hero{padding-block:clamp(56px,9vw,120px) 0;display:grid;gap:clamp(28px,4vw,44px)}
+.h-meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.h-line{font-size:clamp(44px,8.2vw,124px);font-weight:500;letter-spacing:-.05em;line-height:.95;max-width:12.5em}
+.h-line em{font-style:normal;color:var(--accent)}
+.h-line .ln{display:block;overflow:hidden;padding-bottom:.04em}
+.h-line .ln>span{display:inline-block;animation:rise 1.1s var(--ease) both}
+.h-line .ln:nth-child(2)>span{animation-delay:.1s}.h-line .ln:nth-child(3)>span{animation-delay:.2s}
+@keyframes rise{from{transform:translateY(105%)}to{transform:none}}
+.side2{display:grid;grid-template-columns:260px minmax(0,1fr);gap:clamp(20px,4vw,64px);align-items:start}
+.side2>*{min-width:0}
+.side2 .l{display:grid;gap:6px;font-size:15px;line-height:1.4;color:var(--ink2);padding-top:10px}
+.side2 .l b{font-weight:700;color:var(--ink)}
+.big{font-size:clamp(24px,2.9vw,40px);line-height:1.22;letter-spacing:-.025em;font-weight:500;max-width:28em;text-wrap:pretty}
+.stage{position:relative;border-radius:30px;background:linear-gradient(150deg,var(--tint) 0%,var(--tint2) 115%);padding:clamp(28px,5vw,72px) clamp(12px,4vw,60px) 0;overflow:hidden}
+.stage::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 64px,rgba(255,255,255,.28) 64px 128px);pointer-events:none}
+.hphones{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:clamp(8px,2.2vw,32px);transform:translateY(var(--py,0px))}
+.hphones img{width:clamp(96px,21vw,270px);display:block;filter:drop-shadow(0 30px 40px rgba(24,20,48,.28));margin-bottom:-10%;animation:up 1.2s var(--ease) both}
+.hphones img:nth-child(2){width:clamp(112px,24vw,310px);margin-bottom:-2%;animation-delay:.12s}
+.hphones img:nth-child(3){animation-delay:.24s}
+@keyframes up{from{transform:translateY(60px);opacity:0}}
+.chipf{position:absolute;z-index:2;background:var(--bg);border-radius:18px;padding:12px 16px;box-shadow:var(--shadow);display:grid;gap:2px;font-size:13px;color:var(--ink2);animation:bob 5s ease-in-out infinite}
+.chipf b{font-size:28px;font-weight:500;letter-spacing:-.03em;color:var(--ink);line-height:1}
+.chipf.c1{left:clamp(10px,3vw,40px);top:clamp(26px,8vw,110px)}
+.chipf.c2{right:clamp(10px,3vw,40px);top:clamp(90px,16vw,230px);animation-delay:-2.5s}
+@keyframes bob{50%{transform:translateY(-10px)}}
+
+/* Marquee */
+.marquee{margin-inline:calc(-1 * var(--gut));overflow:hidden;border-block:1px solid var(--line);padding-block:18px;margin-top:clamp(56px,7vw,88px)}
+.track{display:flex;gap:44px;width:max-content;animation:mq 46s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.track span{font-size:clamp(22px,2.6vw,34px);font-weight:500;letter-spacing:-.02em;white-space:nowrap}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* Stat cards */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;align-items:start}
+.sc{border-radius:20px;overflow:hidden;background:var(--bg);border:1px solid var(--line);transition:transform .5s var(--ease)}
+.sc:hover{transform:translateY(-6px)}
+.hatch{background-color:var(--dark);background-image:repeating-linear-gradient(135deg,transparent 0 22px,rgba(255,255,255,.09) 22px 23px);color:var(--on-dark)}
+.sc .band{height:34px}
+.sc .num{font-size:clamp(48px,5.4vw,76px);font-weight:400;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums;padding:22px 22px 0}
+.sc .num small{font-size:.32em;letter-spacing:0;margin-left:6px;color:var(--muted)}
+.sc p{padding:14px 22px 24px;font-size:14.5px;line-height:1.5;color:var(--ink2)}
+.sc p b{color:var(--ink);font-weight:700}
+.sc.t2{margin-top:56px}
+.sc.t3{margin-top:112px;border:0}
+.sc.t3 p{color:var(--on-dark2)}.sc.t3 p b{color:var(--on-dark)}
+.sc.t3 .num{padding-top:120px}
+.sc.t4{margin-top:24px;background:var(--accent);border:0;color:var(--on-accent)}
+.sc.t4 p{color:rgba(255,255,255,.9)}.sc.t4 p b{color:#fff}
+
+/* Chapters */
+.ch{padding-block:clamp(96px,12vw,170px) 0;display:grid;gap:clamp(36px,5vw,64px)}
+.ch-head{display:grid;grid-template-columns:260px minmax(0,1fr);gap:clamp(20px,4vw,64px);align-items:start}
+.ch-head .l{display:grid;gap:4px;padding-top:12px}
+.ch-head .l .n{font-family:var(--mono);font-weight:600;font-size:12px;color:var(--accent-ink);letter-spacing:.1em}
+.ch-head .l .t{font-size:15px;font-weight:700}
+.ch-head h2{font-size:clamp(38px,5.6vw,80px);letter-spacing:-.045em;line-height:.98}
+.body{display:grid;grid-template-columns:260px minmax(0,1fr);gap:clamp(20px,4vw,64px)}
+.body>div:last-child{min-width:0;display:grid;gap:clamp(24px,3vw,36px)}
+.p{color:var(--ink2);max-width:62ch;font-size:18px}
+.sub{font-size:clamp(22px,2vw,28px);letter-spacing:-.025em}
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(24px,4vw,56px);align-items:start}
+.split>*{min-width:0;display:grid;gap:18px;align-content:start}
+
+/* Chapter 02: the broken chain */
+.chain{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;background:var(--soft);border-radius:28px;padding:clamp(18px,3vw,32px);position:relative}
+.link{position:relative;display:grid;gap:10px;align-content:start;padding:0 clamp(10px,1.6vw,22px)}
+.link+.link{border-left:1px dashed var(--ghost)}
+.node{display:flex;align-items:center;gap:10px}
+.node i{width:40px;height:40px;border-radius:12px;background:var(--bg);display:grid;place-items:center;font-style:normal;font-family:var(--mono);font-weight:600;font-size:13px;color:var(--accent-ink);box-shadow:0 1px 0 var(--line);flex:none}
+.node b{font-size:13px;font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;font-weight:500;color:var(--muted)}
+.link h3{font-size:clamp(20px,1.9vw,25px);letter-spacing:-.02em;line-height:1.15}
+.link p{font-size:15px;color:var(--ink2);line-height:1.5}
+.crack{height:6px;border-radius:3px;background:var(--ink);position:relative;overflow:hidden;margin-block:6px}
+.crack::after{content:"";position:absolute;top:0;bottom:0;left:46%;width:16%;background:var(--soft);transform:skewX(-30deg);transition:width .9s var(--ease) .3s}
+.chain.pre .crack::after{width:0}
+.link:nth-child(2) .crack::after{transition-delay:.45s}.link:nth-child(3) .crack::after{transition-delay:.6s}.link:nth-child(4) .crack::after{transition-delay:.75s}
+.crack.bad{background:var(--err)}
+
+/* Research */
+.methods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tk{background:var(--soft);border-radius:20px;padding:22px;display:grid;gap:10px;align-content:start;grid-template-rows:auto auto 1fr auto;transition:transform .5s var(--ease),background .3s}
+.tk:hover{transform:translateY(-4px);background:var(--soft2)}
+.tk-n{font-family:var(--mono);font-weight:600;font-size:12px;letter-spacing:.1em;color:var(--accent-ink)}
+.tk b{font-size:19px;font-weight:700;letter-spacing:-.015em;line-height:1.25}
+.tk p{font-size:15px;color:var(--ink2);line-height:1.5}
+.tk-o{font-size:13.5px;line-height:1.45;padding-top:12px;border-top:1px solid var(--line);color:var(--ink)}
+.tk-o::before{content:"→ ";color:var(--accent)}
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink)}
+.nums div{padding:18px 18px 0 0;display:grid;gap:6px}
+.nums div+div{padding-left:18px;border-left:1px solid var(--line)}
+.nums b{font-size:clamp(46px,6vw,88px);font-weight:400;letter-spacing:-.06em;line-height:1}
+.nums span{font-size:14.5px;color:var(--ink2);line-height:1.4}
+.qs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.q{border-radius:20px;padding:22px;display:grid;gap:12px;align-content:start;background:var(--soft)}
+.q.pt{background:var(--tint)}
+.q p{font-size:18px;line-height:1.4;letter-spacing:-.01em;font-weight:500}
+.funnel{display:grid;gap:0;border-top:1px solid var(--ink)}
+.ins{display:grid;grid-template-columns:44px minmax(0,1fr) 56px minmax(0,1fr);gap:12px;align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
+.ins span{font-family:var(--mono);font-size:12px;color:var(--accent-ink)}
+.ins b{font-size:clamp(18px,1.8vw,24px);font-weight:500;letter-spacing:-.02em;line-height:1.25}
+.ins .ar{color:var(--accent);font-size:24px;text-align:center;transition:transform .6s var(--ease) .2s,opacity .6s .2s}
+.ins p{font-size:16px;color:var(--ink2);line-height:1.45;transition:opacity .8s .35s}
+.ins.pre .ar{transform:translateX(-14px);opacity:0}.ins.pre p{opacity:.15}
+.verdict{background:var(--dark);color:var(--on-dark);border-radius:28px;padding:clamp(24px,4vw,44px);display:grid;gap:14px}
+.verdict .label{color:var(--on-dark2)}
+.verdict p{font-size:clamp(22px,2.6vw,34px);line-height:1.25;letter-spacing:-.025em;font-weight:500;max-width:26em}
+.verdict p em{font-style:normal;color:var(--tint2)}
+.niche{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+
+/* Notched cards */
+.notch{position:relative;background:var(--soft);border-radius:22px;padding:22px;display:grid;gap:12px;align-content:start;transition:transform .5s var(--ease)}
+.notch::after{content:"";position:absolute;top:0;right:0;width:34%;height:40px;background:var(--bg);border-bottom-left-radius:20px}
+.notch::before{content:"";position:absolute;top:13px;right:13px;width:13px;height:13px;border-radius:50%;background:var(--ink);z-index:1;transition:transform .4s var(--ease),background .4s}
+.notch:hover{transform:translateY(-6px)}
+.notch:hover::before{transform:scale(1.35);background:var(--accent)}
+.notch .k{font-size:26px;font-weight:400;letter-spacing:-.02em;line-height:1}
+.notch h4{font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:-.01em;line-height:1.15}
+.notch p{font-size:14px;line-height:1.5;color:var(--ink2)}
+.notch.orange{background:var(--accent);color:var(--on-accent)}
+.notch.orange p{color:rgba(255,255,255,.9)}
+.notch.orange::before{background:var(--on-accent)}
+.notch.dark{background:var(--dark);color:var(--on-dark)}
+.notch.dark p{color:var(--on-dark2)}
+.notch.dark::before{background:var(--accent)}
+
+/* Personas */
+.personas{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pers{border-radius:28px;padding:clamp(20px,3vw,32px);display:grid;gap:20px;align-content:start}
+.pers.dark{background:var(--dark);color:var(--on-dark)}
+.pers.light{background:var(--tint)}
+.pers-top{display:flex;align-items:center;gap:14px}
+.av{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;font-weight:700;font-size:20px;flex:none}
+.pers.dark .av{background:var(--accent);color:#fff}
+.pers.light .av{background:var(--bg);color:var(--accent-ink)}
+.pers-top b{font-size:26px;letter-spacing:-.025em;display:block;line-height:1.1}
+.pers-top small{font-size:14px;opacity:.7}
+.pers .about{font-size:15.5px;line-height:1.55;opacity:.85}
+.pers q{font-size:clamp(22px,2.2vw,28px);line-height:1.25;letter-spacing:-.02em;font-weight:500;quotes:"“" "”"}
+.emp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.emp div{border-radius:14px;padding:12px 14px;display:grid;gap:4px;align-content:start;font-size:14px;line-height:1.45}
+.pers.dark .emp div{background:rgba(255,255,255,.07)}
+.pers.light .emp div{background:rgba(255,255,255,.75)}
+.emp .label{font-size:11px}
+.pers.dark .label{color:var(--on-dark2)}
+.pn{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding-top:16px;border-top:1px solid rgba(128,128,128,.28)}
+.pn ul{display:grid;gap:6px}
+.pn li{font-size:14.5px;line-height:1.45;padding-left:16px;position:relative}
+.pn li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+.pn .pain li::before{background:var(--err)}
+
+/* Shifts */
+.shifts{display:grid;border-top:1px solid var(--ink)}
+.shift{display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1.2fr);align-items:center;gap:12px;padding:24px 0;border-bottom:1px solid var(--line)}
+.shift .from{font-size:clamp(20px,2.2vw,30px);letter-spacing:-.02em;color:var(--muted);position:relative;justify-self:start}
+.shift .from::after{content:"";position:absolute;left:0;right:0;top:54%;height:2px;background:var(--accent);transform-origin:left;transition:transform .9s var(--ease) .15s}
+.shift.pre .from::after{transform:scaleX(0)}
+.shift .ar{font-size:26px;color:var(--accent);text-align:center;transition:transform .6s var(--ease) .3s,opacity .6s .3s}
+.shift.pre .ar{transform:translateX(-14px);opacity:0}
+.shift .to{font-size:clamp(20px,2.2vw,30px);letter-spacing:-.02em;font-weight:500;transition:opacity .8s .45s}
+.shift.pre .to{opacity:.15}
+.shift .to small{display:block;font-size:15px;font-weight:400;color:var(--ink2);letter-spacing:0;margin-top:4px;line-height:1.45}
+
+/* Architecture */
+.arch{background:var(--soft);border-radius:30px;padding:clamp(18px,3vw,36px);display:grid;gap:18px}
+.arch-root{justify-self:center;background:var(--ink);color:var(--bg);border-radius:14px;padding:12px 22px;font-weight:700;position:relative}
+.arch-root::after{content:"";position:absolute;top:100%;left:50%;width:1.5px;height:18px;background:var(--ink)}
+.layers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;border-top:1.5px solid var(--ink);padding-top:18px;position:relative}
+.layer{background:var(--bg);border-radius:18px;padding:16px;display:grid;gap:10px;align-content:start;position:relative;transition:transform .5s var(--ease)}
+.layer:hover{transform:translateY(-4px)}
+.layer::before{content:"";position:absolute;top:-18px;left:50%;width:1.5px;height:18px;background:var(--ink)}
+.layer span{font-family:var(--mono);font-size:12px;color:var(--accent-ink);font-weight:600}
+.layer b{font-size:16px;line-height:1.25;letter-spacing:-.01em}
+.layer ul{display:grid;gap:6px}
+.layer li{font-size:13.5px;line-height:1.35;color:var(--ink2);background:var(--soft);border-radius:8px;padding:6px 9px}
+.layer.hot{background:var(--accent);color:#fff}
+.layer.hot span{color:#fff;opacity:.85}
+.layer.hot li{background:rgba(255,255,255,.16);color:#fff}
+.principles{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;border-top:1px dashed var(--ghost);padding-top:16px}
+.principles .label{margin-right:6px}
+.principles b{font-size:14px;font-weight:500;background:var(--dark);color:var(--on-dark);border-radius:999px;padding:8px 14px}
+.matrixbox{overflow-x:auto;border-radius:22px;background:var(--soft)}
+.matrix{border-collapse:collapse;width:100%;min-width:620px;font-size:15px}
+.matrix th,.matrix td{padding:13px 16px;border-bottom:1px solid var(--line);text-align:center}
+.matrix th{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+.matrix th:first-child,.matrix td:first-child{text-align:left}
+.matrix tr:last-child td{border-bottom:0}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;transition:transform .5s var(--ease)}
+.dot.d2{background:var(--accent)}
+.dot.d1{background:transparent;box-shadow:inset 0 0 0 2px var(--accent)}
+.dot.d0{width:12px;height:2px;border-radius:1px;background:var(--ghost)}
+.matrix tr:hover .dot.d2{transform:scale(1.3)}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;color:var(--ink2);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+
+/* Blueprint */
+.deliv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ftree{background:var(--soft);border-radius:26px;padding:clamp(18px,3vw,32px);display:grid;gap:22px;justify-items:center}
+.ft-root{background:var(--ink);color:var(--bg);border-radius:14px;padding:12px 20px;display:grid;justify-items:center;gap:2px;position:relative}
+.ft-root span{font-weight:700}
+.ft-root small{font-size:12.5px;opacity:.7}
+.ft-root::after{content:"";position:absolute;top:100%;left:50%;width:1.5px;height:22px;background:var(--ink)}
+.ft-cols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;width:100%;position:relative;padding-top:16px;border-top:1.5px solid var(--ink)}
+.ft-col{display:grid;gap:8px;align-content:start;position:relative}
+.ft-col::before{content:"";position:absolute;top:-16px;left:50%;width:1.5px;height:16px;background:var(--ink)}
+.ft-node{background:var(--bg);border-radius:14px;padding:12px;display:grid;gap:4px;box-shadow:0 1px 0 var(--line)}
+.ft-node b{font-size:15px}
+.ft-node small{font-size:12.5px;color:var(--ink2);line-height:1.35}
+.ft-col.hot .ft-node{background:var(--accent);color:#fff}
+.ft-col.hot .ft-node small{color:rgba(255,255,255,.85)}
+.ft-col ul{display:grid;gap:6px;padding-left:10px;border-left:1.5px solid var(--ghost);margin-left:10px}
+.ft-col li{font-size:13.5px;color:var(--ink2);background:var(--bg);border-radius:8px;padding:5px 9px}
+.ft-deep{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;border-top:1px dashed var(--ghost);padding-top:16px;width:100%}
+.ft-deep span{font-size:13.5px;padding:6px 12px;border-radius:999px;background:var(--bg);border:1px solid var(--line)}
+.ft-deep i{font-style:normal;color:var(--accent)}
+.flowtabs{display:flex;flex-wrap:wrap;gap:8px}
+.flowtabs button{font:inherit;font-size:14px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink2);cursor:pointer;transition:all .2s}
+.flowtabs button:hover{border-color:var(--ink2);color:var(--ink)}
+.flowtabs button[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.flowcard{background:var(--soft);border-radius:26px;padding:clamp(18px,3vw,32px);display:grid;gap:20px}
+.fl-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline}
+.fl-head b{font-size:clamp(20px,2vw,26px);letter-spacing:-.02em}
+.fl-head span{font-size:14px;color:var(--muted)}
+.fl{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:12px 34px}
+.fl li{position:relative;display:flex;align-items:center;gap:10px;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;font-size:15px;font-weight:500;transition:border-color .35s,background .35s,color .35s}
+.fl li span{width:24px;height:24px;border-radius:50%;background:var(--soft2);display:grid;place-items:center;font-size:12px;font-weight:700;flex:none;transition:background .35s,color .35s}
+.fl li:not(:last-child)::after{content:"→";position:absolute;right:-25px;color:var(--ghost);font-weight:400;transition:color .35s}
+.fl li.on{border-color:var(--accent)}
+.fl li.on span{background:var(--accent);color:#fff}
+.fl li.on:not(:last-child)::after{color:var(--accent)}
+.fl li:last-child.on{background:var(--dark);color:var(--on-dark);border-color:var(--dark)}
+.fl-note{font-size:16px;color:var(--ink2);line-height:1.55;max-width:70ch}
+.fl-note b{color:var(--ink)}
+.sheet{border-radius:26px;overflow:hidden;background:var(--soft);display:grid}
+.sheet img{display:block;width:100%;height:auto;transition:transform 1.2s var(--ease)}
+.sheet:hover img{transform:scale(1.02)}
+.sheet figcaption{padding:14px 18px;font-size:14px;color:var(--ink2);border-top:1px solid var(--line);background:var(--bg)}
+figure{margin:0}
+
+/* Decisions */
+.dgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.dgrid .notch{min-height:220px;text-decoration:none;grid-template-rows:auto 1fr auto}
+.dgrid .notch h4{align-self:end}
+.dec{display:grid;gap:26px;padding-top:clamp(48px,6vw,80px);border-top:1px solid var(--line)}
+.dec-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,4vw,56px);align-items:start}
+.dec-head .k{font-family:var(--mono);font-size:13px;color:var(--accent-ink);display:block;margin-bottom:14px}
+.dec-head h3{font-size:clamp(30px,3.6vw,48px);letter-spacing:-.035em}
+.dec-head .why{display:grid;gap:10px;padding-top:4px}
+.dec-head .why p{color:var(--ink2);font-size:17px;line-height:1.6}
+.dec-stage{border-radius:30px;padding:clamp(20px,4.5vw,64px) clamp(12px,5vw,72px);display:grid;gap:18px;overflow:hidden}
+.dec:nth-of-type(4n+1) .dec-stage{background:var(--tint)}
+.dec:nth-of-type(4n+2) .dec-stage{background:var(--mint)}
+.dec:nth-of-type(4n+3) .dec-stage{background:var(--sand)}
+.dec:nth-of-type(4n+4) .dec-stage{background:var(--soft)}
+.phones{display:flex;justify-content:center;align-items:flex-start;gap:clamp(10px,3vw,40px);flex-wrap:wrap}
+.phones img{width:clamp(120px,22vw,250px);height:auto;display:block;filter:drop-shadow(0 24px 30px rgba(24,20,48,.22));transition:transform .8s var(--ease)}
+.phones img:nth-child(2){transform:translateY(24px)}
+.dec-stage:hover .phones img{transform:translateY(-6px)}
+.dec-stage:hover .phones img:nth-child(2){transform:translateY(16px)}
+.dec-stage figcaption{font-size:14px;color:var(--ink2);text-align:center;padding-top:28px}
+.webs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(12px,2vw,24px)}
+.frame{background:#fff;border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.frame-bar{display:flex;align-items:center;gap:7px;height:32px;padding:0 12px;background:#EDECE8}
+.frame-bar i{width:9px;height:9px;border-radius:50%;background:#FF5F57}
+.frame-bar i:nth-child(2){background:#FEBC2E}.frame-bar i:nth-child(3){background:#28C840}
+.frame-bar span{margin-left:10px;flex:1;max-width:300px;height:20px;border-radius:6px;background:#fff;color:var(--muted);font-family:var(--mono);font-size:11px;display:flex;align-items:center;padding-inline:10px;overflow:hidden;white-space:nowrap}
+.frame img{display:block;width:100%;height:auto}
+.seesplit{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:760px;width:100%;margin:0 auto}
+.seesplit div{background:var(--bg);border-radius:18px;padding:18px;display:grid;gap:10px;align-content:start}
+.seesplit li{font-size:15px;line-height:1.4;padding-left:26px;position:relative}
+.seesplit .yes li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:700}
+.seesplit .no li{color:var(--ink2)}
+.seesplit .no li::before{content:"✕";position:absolute;left:0;color:var(--err);font-weight:700}
+.dec-5 .phones{align-items:center}
+.stagegrid{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(16px,3vw,40px);align-items:center}
+.specs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.spec{background:var(--soft);border-radius:20px;padding:22px;display:grid;gap:14px;align-content:start}
+.spec ul{display:grid;gap:10px}
+.spec li{font-size:15px;line-height:1.5;color:var(--ink2);padding-left:16px;position:relative}
+.spec li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+.spec p{font-size:16px;line-height:1.5}
+.spec.dk{background:var(--dark);color:var(--on-dark)}
+.spec.dk .label{color:var(--on-dark2)}
+
+/* Screens */
+.sgroup{display:grid;gap:14px}
+.srow{display:flex;gap:14px;overflow-x:auto;padding:clamp(14px,2.4vw,24px);background:var(--soft);border-radius:24px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.srow img{flex:none;width:clamp(140px,17vw,210px);height:auto;scroll-snap-align:start;filter:drop-shadow(0 12px 18px rgba(24,20,48,.16));transition:transform .5s var(--ease)}
+.srow img:hover{transform:translateY(-6px)}
+.shead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.shead b{font-size:19px;letter-spacing:-.015em}
+.webwall{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.webwall figure{display:grid;gap:10px}
+.webwall figcaption{font-size:14px;color:var(--ink2)}
+.note{background:var(--tint);border-radius:20px;padding:20px 22px;display:grid;gap:8px}
+.note p{font-size:17px;line-height:1.5}
+
+/* Style guide */
+.sgc-group{display:grid;gap:10px}
+.ramp{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.ramp.n{grid-template-columns:repeat(10,minmax(0,1fr))}
+.ramp.s{grid-template-columns:repeat(4,minmax(0,1fr))}
+.sw{background:var(--soft);border-radius:14px;overflow:hidden;display:grid;gap:2px;padding-bottom:10px;transition:transform .4s var(--ease);min-width:0}
+.sw:hover{transform:translateY(-4px)}
+.sw i{height:64px;display:block;margin-bottom:6px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.sw b,.sw code,.sw small{padding-inline:10px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.sw b{font-size:13.5px}
+.sw code{font-family:var(--mono);font-size:12px;color:var(--ink2)}
+.sw small{font-size:12px;color:var(--ink2);line-height:1.35;white-space:normal}
+.ramp.n .sw i{height:48px}
+.ramp.n .sw code{font-size:10.5px}
+.tscale{display:grid;border-top:1px solid var(--ink)}
+.trow{display:grid;grid-template-columns:150px minmax(0,1fr) 60px;gap:16px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line)}
+.trow .label{font-size:11px}
+.trow p{font-family:var(--pop);letter-spacing:-.01em;line-height:1.15;overflow-wrap:anywhere}
+.trow code{font-family:var(--mono);font-size:13px;color:var(--ink2);text-align:right}
+.kit{background:var(--app);border-radius:30px;padding:clamp(18px,3.5vw,40px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;font-family:var(--pop);color:#fff}
+.kc{background:var(--app2);border-radius:18px;padding:18px;display:grid;gap:12px;align-content:start;min-width:0}
+.kc .label{color:#8B8B92;font-family:var(--mono)}
+.btn-p{background:var(--accent);color:#fff;border:0;border-radius:12px;padding:13px 18px;font:500 15px var(--pop);width:100%;cursor:pointer;transition:transform .2s,filter .2s}
+.btn-p:hover{filter:brightness(1.08)}.btn-p:active{transform:scale(.97)}
+.btn-o{background:transparent;color:#fff;border:1.5px solid #fff;border-radius:999px;padding:10px 18px;font:500 14px var(--pop);cursor:pointer}
+.btn-d{background:#6B6B70;color:#B9B9BE;border:0;border-radius:12px;padding:13px 18px;font:500 15px var(--pop);width:100%;cursor:not-allowed}
+.brow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.chipsx{display:flex;flex-wrap:wrap;gap:8px}
+.chipx{font-size:12.5px;border-radius:8px;padding:4px 10px;font-weight:500}
+.chipx.up{background:var(--accent)}.chipx.pe{background:#5C5C62;color:#DADADF}.chipx.ca{background:var(--err)}.chipx.co{background:var(--ok)}
+.qcard{background:var(--app3);border-radius:12px;padding:12px;display:grid;gap:10px;font-size:13.5px}
+.radios{display:flex;gap:22px}
+.radio{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font-size:15px}
+.radio input{appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:50%;border:1.5px solid #9A9AA0;margin:0;display:grid;place-items:center;cursor:pointer}
+.radio input::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--accent);transform:scale(0);transition:transform .25s var(--ease)}
+.radio input:checked{border-color:var(--accent);background:#fff}
+.radio input:checked::after{transform:scale(1)}
+.check{display:flex;align-items:center;gap:10px;font-size:13.5px;cursor:pointer}
+.check input{appearance:none;-webkit-appearance:none;width:18px;height:18px;border-radius:4px;border:1.5px solid #9A9AA0;margin:0;display:grid;place-items:center;cursor:pointer;flex:none}
+.check input:checked{background:#fff;border-color:#fff}
+.check input:checked::after{content:"✓";color:var(--app);font-size:13px;font-weight:700;line-height:1}
+.stepper{display:flex;gap:8px;justify-content:center}
+.stepper i{width:36px;height:3px;border-radius:2px;background:#8B8B92;transition:background .4s}
+.stepper i.on{background:var(--accent)}
+.alert{border:1px solid #fff;border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;line-height:1.35}
+.alert i{flex:none;width:24px;height:24px;border-radius:50%;background:#F24848;display:grid;place-items:center;font-style:normal;font-weight:700}
+.bal{text-align:center;display:grid;gap:2px;background:var(--app3);border-radius:14px;padding:16px}
+.bal b{font-size:34px;font-weight:500;color:#8982FF;letter-spacing:-.01em}
+.toggle{display:flex;justify-content:space-between;align-items:center;background:var(--app3);border-radius:12px;padding:10px 14px;font-size:15px}
+.tg{position:relative;width:44px;height:26px;border-radius:999px;background:#fff;border:0;cursor:pointer;flex:none}
+.tg::after{content:"";position:absolute;left:4px;top:4px;width:18px;height:18px;border-radius:50%;background:var(--accent);transition:transform .3s var(--ease)}
+.tg[aria-checked="true"]{background:var(--accent)}
+.tg[aria-checked="true"]::after{transform:translateX(18px);background:#fff}
+.rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid var(--ink)}
+.rules div{padding:20px 24px 20px 0;border-bottom:1px solid var(--line);display:grid;gap:6px}
+.rules div:nth-child(even){padding-left:24px;border-left:1px solid var(--line)}
+.rules b{font-size:19px;letter-spacing:-.01em}
+.rules p{font-size:15.5px;color:var(--ink2);line-height:1.5}
+
+/* Outcome */
+.cert{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px}
+.cert-main{background:var(--accent);color:#fff;border-radius:28px;padding:clamp(24px,4vw,44px);display:grid;gap:16px;align-content:space-between;min-height:300px;position:relative;overflow:hidden}
+.cert-main::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 40px,rgba(255,255,255,.08) 40px 80px)}
+.cert-main>*{position:relative}
+.cert-main .label{color:rgba(255,255,255,.8)}
+.cert-main b{font-size:clamp(28px,3.4vw,46px);letter-spacing:-.035em;line-height:1.05;font-weight:500}
+.cert-main p{font-size:16px;opacity:.92}
+.iter{background:var(--soft);border-radius:28px;padding:clamp(20px,3vw,32px);display:grid;gap:14px;align-content:start}
+.iter li{display:flex;gap:12px;align-items:baseline;font-size:17px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.iter li:last-child{border-bottom:0}
+.iter li::before{content:"✓";color:var(--accent);font-weight:700}
+.measure{display:grid;border-top:1px solid var(--ink)}
+.measure div{display:grid;grid-template-columns:44px minmax(0,1fr) minmax(0,1.3fr);gap:12px;padding:16px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.measure span{font-family:var(--mono);font-size:12px;color:var(--accent-ink)}
+.measure b{font-size:18px;letter-spacing:-.01em}
+.measure p{font-size:15.5px;color:var(--ink2)}
+.learn{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:36px 44px}
+.learn div{border-top:1px solid var(--ink);padding-top:18px;display:grid;gap:10px}
+.learn b{font-weight:700;font-size:22px;letter-spacing:-.015em;line-height:1.25}
+.learn p{color:var(--ink2);font-size:16px}
+
+/* Footer */
+.end{margin-top:clamp(110px,13vw,190px);margin-inline:calc(-1 * var(--gut));background:var(--accent);color:var(--on-accent);padding:clamp(40px,6vw,72px) var(--gut) 28px}
+.end-in{max-width:1280px;margin:0 auto;display:grid;gap:clamp(40px,6vw,72px)}
+.end .go{display:flex;align-items:center;justify-content:space-between;gap:20px;text-decoration:none;font-size:clamp(52px,10vw,160px);font-weight:500;letter-spacing:-.06em;line-height:.9}
+.end .go small{display:block;font-size:14px;letter-spacing:.1em;text-transform:uppercase;font-family:var(--mono);font-weight:500;opacity:.8;margin-bottom:14px}
+.end .go .arr{transition:transform .6s var(--ease);display:inline-block}
+.end .go:hover .arr{transform:translateX(18px)}
+.end .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:14px;border-top:1px solid rgba(255,255,255,.35);padding-top:18px}
+.end .row a{text-decoration:none;opacity:.9}
+.end .row a:hover{opacity:1;text-decoration:underline}
+
+@media (max-width:1100px){
+  .ch-head,.body,.side2{grid-template-columns:minmax(0,1fr)}
+  .ch-head .l,.side2 .l{grid-auto-flow:column;justify-content:start;gap:14px;align-items:baseline}
+  .body>div:first-child{display:none}
+  .dgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .layers{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:28px}
+  .ft-cols{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:28px}
+  .kit{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ramp.n{grid-template-columns:repeat(5,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .links,.chipf{display:none}
+  .menu-btn{display:inline-flex}
+  .menu{position:absolute;left:var(--gut);right:var(--gut);top:calc(100% + 8px);background:var(--bg);border-radius:20px;box-shadow:var(--shadow);padding:10px;display:grid;gap:2px;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .25s,transform .25s var(--ease)}
+  .menu.open{opacity:1;transform:none;pointer-events:auto}
+  .menu a{text-decoration:none;padding:12px 14px;border-radius:12px;font-size:16px}
+  .menu a:hover{background:var(--soft)}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .sc.t2,.sc.t3,.sc.t4{margin-top:0}.sc.t3 .num{padding-top:40px}
+  .chain{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:26px}
+  .link:nth-child(3){border-left:0}
+  .methods,.qs,.niche,.personas,.split,.dec-head,.specs,.deliv,.webwall,.rules,.cert,.learn,.seesplit,.stagegrid{grid-template-columns:minmax(0,1fr)}
+  .rules div:nth-child(even){padding-left:0;border-left:0}
+  .nums{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .nums div:nth-child(3){padding-left:0;border-left:0}
+  .nums div{padding-bottom:18px}
+  .ins{grid-template-columns:36px minmax(0,1fr);gap:6px 10px}
+  .ins .ar{grid-column:2;text-align:left;transform:rotate(90deg);justify-self:start}
+  .ins.pre .ar{transform:rotate(90deg) translateX(-10px)}
+  .ins p{grid-column:2}
+  .shift{grid-template-columns:minmax(0,1fr);gap:6px}.shift .ar{text-align:left;justify-self:start;transform:rotate(90deg)}
+  .dgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fl{flex-direction:column;gap:22px}
+  .fl li:not(:last-child)::after{content:"↓";right:auto;left:22px;top:100%;margin-top:1px}
+  .emp{grid-template-columns:minmax(0,1fr)}
+  .measure div{grid-template-columns:36px minmax(0,1fr)}
+  .measure p{grid-column:2}
+  .trow{grid-template-columns:minmax(0,1fr) 50px}
+  .trow .label{grid-column:1/-1}
+}
+@media (max-width:600px){
+  body{font-size:17px}
+  .stats,.chain,.layers,.ft-cols,.kit,.pn{grid-template-columns:minmax(0,1fr)}
+  .dgrid .notch{min-height:150px}
+  .dgrid .notch h4{font-size:14px}
+  .link+.link{border-left:0;border-top:1px dashed var(--ghost);padding-top:20px}
+  .link{padding:0}
+  .ramp,.ramp.s{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ramp.n{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .phones img{width:calc(50% - 10px);max-width:220px}
+  .phones img:nth-child(2){transform:none}
+  .dec-stage:hover .phones img:nth-child(2){transform:translateY(-6px)}
+  .cta{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="back" href="../" aria-label="All case studies"><svg width="20" height="20" viewBox="0 0 26 26" fill="none" aria-hidden="true"><path d="M23 13H4M11 5l-8 8 8 8" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    <div class="who">Abhishek Jha<small>Case study 02 · Oncarea</small></div>
+    <nav class="links" aria-label="Chapters">
+      <a href="#gap">Where it breaks</a><a href="#research">Research</a><a href="#people">People</a><a href="#system">System</a><a href="#blueprint">Blueprint</a><a href="#decisions">Decisions</a><a href="#style">Style guide</a><a href="#outcome">Outcome</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menu">Chapters</button>
+    <a class="cta" href="../germanly/">Next case study <span class="arr" aria-hidden="true">→</span></a>
+  </div>
+  <div class="progress" id="progress"></div>
+  <nav class="menu" id="menu" aria-label="Chapters"><a href="#camp">01 The camp</a><a href="#gap">02 Where screening breaks</a><a href="#research">03 The research</a><a href="#people">04 The people</a><a href="#changes">05 What changes</a><a href="#system">06 The system</a><a href="#blueprint">07 The blueprint</a><a href="#decisions">08 Design decisions</a><a href="#screens">09 Final screens</a><a href="#style">10 Style guide</a><a href="#outcome">11 Outcome and learnings</a></nav>
+</header>
+
+<main class="wrap">
+  <section class="hero" id="top">
+    <div class="h-meta"><span class="label">A case study about restraint in healthcare design</span><span class="label">Fellowship research · 24 weeks · 2023</span></div>
+    <h1 class="h-line"><span class="ln"><span>Screening fails</span></span><span class="ln"><span>at the camera, long</span></span><span class="ln"><span><em>before the AI does.</em></span></span></h1>
+    <div class="side2">
+      <div class="l"><b>Oncarea</b><span>An oral cancer screening ecosystem for rural outreach, built under the Chanakya UG Fellowship at IIT Roorkee</span></div>
+      <p class="big scrub">Most digital screening tools start with the algorithm. In the field, the problems start earlier: a blurry photo, a missing history, a doctor who won't sign off on a machine's guess, a patient scared by a report. This is how I designed a system where the doctor decides, the patient is guided and the AI only assists.</p>
+    </div>
+    <div class="stage rv">
+      <div class="chipf c1"><b>14</b>interviews, doctors and patients</div>
+      <div class="chipf c2"><b>0</b>diagnoses shown to patients</div>
+      <div class="hphones" id="heroPhones">
+        <img src="images/p_habits.webp" alt="Doctor app: habit and symptom questions for a patient">
+        <img src="images/p_scan.webp" alt="Guided oral scan with a mouth overlay over the live camera">
+        <img src="images/d_home.webp" alt="Doctor app home with the next session and patient totals">
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="track" id="track"></div></div>
+
+  <section class="ch" aria-label="Outcomes">
+    <div class="side2">
+      <div class="l"><b>In numbers</b><span>My role: Interaction Designer and Research Lead</span></div>
+      <p class="big scrub">I led Oncarea end to end, from interviews with doctors and rural patients to the system architecture, the doctor and patient flows, and the final screens for app, web and clinic dashboard.</p>
+    </div>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="ch" id="camp">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 01</span><span class="t">The camp</span></div><h2>Found early, oral cancer is treatable. In villages, it is rarely found early.</h2></div>
+    <div class="body"><div></div><div>
+      <p class="big scrub">Oral cancer is one of the most common cancers in India, and chewing tobacco like gutka and khaini is a big part of why. In rural areas the specialist is far away, so screening happens at outreach camps: one doctor, a queue of people, a phone, and a single day.</p>
+      <div class="split rv">
+        <div><p class="p">Oncarea started as a research project at iHub Divya Sampark, IIT Roorkee, with one aim: make early detection and management of oral cancer reachable for rural patients and the doctors who serve them.</p></div>
+        <div><p class="p">The obvious product was an app that looks at a photo and says whether it is cancer. Our research took that idea apart. The hard problems were not in the model. They were everything around it.</p></div>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="ch" id="gap">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 02</span><span class="t">Where screening breaks</span></div><h2>Four links, and each one breaks in the field.</h2></div>
+    <div class="body"><div></div><div>
+      <p class="p">Screening is a chain: capture an image, add context, review it, tell the patient. A smarter model only strengthens the third link. These are the other three, and the third one too.</p>
+      <div class="chain rv" id="chain"></div>
+    </div></div>
+  </section>
+
+  <section class="ch" id="research">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 03</span><span class="t">The research</span></div><h2>We asked doctors about liability and patients about fear.</h2></div>
+    <div class="body"><div></div><div>
+      <div class="nums rv" id="nums"></div>
+      <h3 class="sub">Three methods, and why each</h3>
+      <div class="methods" id="methods"></div>
+      <h3 class="sub">What we asked</h3>
+      <p class="p">Semi structured interviews let us follow what people cared about instead of a script. These were the questions that opened the most.</p>
+      <div class="qs rv" id="qs"></div>
+      <h3 class="sub">From raw data to four insights</h3>
+      <div class="funnel" id="funnel"></div>
+      <div class="verdict rv"><span class="label">What the research told us to build</span><p>A <em>doctor first</em> system, with <em>limited patient autonomy</em> and <em>human in the loop AI</em>.</p></div>
+      <h3 class="sub">Who it is for</h3>
+      <div class="niche" id="niche"></div>
+    </div></div>
+  </section>
+
+  <section class="ch" id="people">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 04</span><span class="t">The people</span></div><h2>One wants context. The other wants calm.</h2></div>
+    <div class="body"><div></div><div>
+      <p class="p">Two personas and empathy maps built from the interviews. They pull in different directions: the doctor wants more information, the patient wants less. The system has to serve both at once.</p>
+      <div class="personas" id="personas"></div>
+    </div></div>
+  </section>
+
+  <section class="ch" id="changes">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 05</span><span class="t">What changes</span></div><h2>From an app that diagnoses to a system that supports.</h2></div>
+    <div class="body"><div></div><div>
+      <p class="p">Design focus: turn research insights into a clinically realistic, ethically constrained system for on site screening and outreach programmes.</p>
+      <div class="shifts" id="shifts"></div>
+    </div></div>
+  </section>
+
+  <section class="ch" id="system">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 06</span><span class="t">The system</span></div><h2>Clinical architecture before any screen.</h2></div>
+    <div class="body"><div></div><div>
+      <p class="p">I mapped the whole clinical journey as five layers held together by three principles. The AI has a place in it, but only in the layers where a doctor is watching.</p>
+      <div class="arch rv" id="arch"></div>
+      <h3 class="sub">Who can do what</h3>
+      <p class="p">Role separation was the principle that settled most debates. If a role does not need to see something to act, it does not see it.</p>
+      <div class="legend"><span><i class="dot d2"></i>Owns it</span><span><i class="dot d1"></i>Takes part</span><span><i class="dot d0"></i>Cannot</span></div>
+      <div class="matrixbox rv"><table class="matrix" id="matrix"></table></div>
+    </div></div>
+  </section>
+
+  <section class="ch" id="blueprint">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 07</span><span class="t">The blueprint</span></div><h2>Three surfaces, one flow of data.</h2></div>
+    <div class="body"><div></div><div>
+      <div class="deliv" id="deliv"></div>
+      <h3 class="sub">Information architecture of the doctor app</h3>
+      <p class="p">Four tabs, matching the four things a doctor does in a day: see today, handle appointments, set availability, manage the account. Screening lives one tap from Home, because it is the reason the app exists.</p>
+      <div class="ftree rv" id="ia"></div>
+      <h3 class="sub">Feature map</h3>
+      <div class="ftree rv" id="features"></div>
+      <h3 class="sub">User flows</h3>
+      <div class="flowtabs" role="tablist" id="flowtabs"></div>
+      <div class="flowcard" id="flowcard" role="tabpanel"></div>
+      <h3 class="sub">Concept and wireframes</h3>
+      <p class="p">We explored every possible flow through scenario role play, then turned them into low fidelity pencil prototypes for early testing.</p>
+      <figure class="sheet rv"><img src="images/wireframes.webp" alt="Pencil wireframes of the doctor home, patient details, patient report and appointment screens" loading="lazy"><figcaption>Low fidelity wireframes: home, patient details, extra details, patient report and appointments</figcaption></figure>
+      <figure class="sheet rv"><img src="images/features.webp" alt="Feature flow diagram for the doctor app and the patient flow" loading="lazy"><figcaption>The original feature flow from the project deck</figcaption></figure>
+    </div></div>
+  </section>
+
+  <section class="ch" id="decisions">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 08</span><span class="t">Design decisions</span></div><h2>Nine decisions, and the research behind each.</h2></div>
+    <div class="body"><div></div><div>
+      <p class="p">Every decision below traces back to something a doctor or patient told us. Each one also had a cost, and I have written that down too.</p>
+      <div class="dgrid" id="dgrid"></div>
+    </div></div>
+    <div id="decs"></div>
+  </section>
+
+  <section class="ch" id="screens">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 09</span><span class="t">Final screens</span></div><h2>Snapshots of every deliverable.</h2></div>
+    <div class="body"><div></div><div>
+      <div id="sgroups" style="display:grid;gap:28px"></div>
+      <div class="note rv"><span class="label">Iterations</span><p>Through several rounds we simplified patient interactions, added scan readiness checks, improved confirmation feedback and reduced overall cognitive load. For patients, most screens follow the same pattern as the doctor's screening flow.</p></div>
+      <h3 class="sub">Web and clinic dashboard</h3>
+      <div class="webwall" id="webwall"></div>
+    </div></div>
+  </section>
+
+  <section class="ch" id="style">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 10</span><span class="t">Style guide and system</span></div><h2>One purple for action, everything else steps back.</h2></div>
+    <div class="body"><div></div><div>
+      <p class="p">A small system on a dark app surface: one primary ramp, a ten step neutral scale, four semantic colours and Poppins across six weights. Built with library components so doctor, patient and web stay consistent.</p>
+      <div class="sgc-group"><span class="label">Primary</span><div class="ramp" id="rampP"></div></div>
+      <div class="sgc-group"><span class="label">Neutral</span><div class="ramp n" id="rampN"></div></div>
+      <div class="sgc-group"><span class="label">Semantic</span><div class="ramp s" id="rampS"></div></div>
+      <h3 class="sub">Type: Poppins</h3>
+      <div class="tscale" id="tscale"></div>
+      <h3 class="sub">Components, live</h3>
+      <p class="p">Rebuilt from the app so you can try them: tap the answers, the checkboxes and the toggle.</p>
+      <div class="kit rv" id="kit">
+        <div class="kc"><span class="label">Buttons</span><button class="btn-p" type="button">Next</button><div class="brow"><button class="btn-o" type="button">Reschedule</button><button class="btn-p" type="button" style="border-radius:999px;padding:10px 14px;font-size:14px">Join session</button></div><button class="btn-d" type="button" disabled>Continue</button></div>
+        <div class="kc"><span class="label">Clinical question</span>
+          <div class="qcard">Does the patient have pain opening the mouth?<div class="radios"><label class="radio"><input type="radio" name="kq1" checked>Yes</label><label class="radio"><input type="radio" name="kq1">No</label></div></div>
+          <div class="stepper" id="kstep"><i class="on"></i><i class="on"></i><i></i></div>
+        </div>
+        <div class="kc"><span class="label">Habits</span>
+          <div class="qcard">Does the patient use any of these?
+            <label class="check"><input type="checkbox" checked>Tobacco (gutka, khaini, betel nut)</label>
+            <label class="check"><input type="checkbox">Alcohol</label>
+            <label class="check"><input type="checkbox">Smoking (cigarettes, beedi)</label>
+          </div>
+        </div>
+        <div class="kc"><span class="label">Appointment status</span><div class="chipsx"><span class="chipx up">Upcoming</span><span class="chipx pe">Pending</span><span class="chipx ca">Cancelled</span><span class="chipx co">Completed</span></div>
+          <div class="toggle">Tuesday<button class="tg" type="button" role="switch" aria-checked="true" aria-label="Available on Tuesday"></button></div>
+          <div class="toggle">Wednesday<button class="tg" type="button" role="switch" aria-checked="false" aria-label="Available on Wednesday"></button></div>
+        </div>
+        <div class="kc"><span class="label">Wallet</span><div class="bal"><small>Your balance</small><b>1340.56</b><small>Coins</small></div><div class="alert">Rewards will be available after successful onboarding<i>!</i></div></div>
+        <div class="kc"><span class="label">Nudge</span><div class="alert">Set your availability to start attending patients<i>!</i></div><p style="font-size:13px;color:#A3A3AA;line-height:1.5">Nudges sit where the problem is, say what to do, and use coral only when something blocks the next step.</p></div>
+      </div>
+      <h3 class="sub">Rules I held the screens to</h3>
+      <div class="rules" id="rules"></div>
+    </div></div>
+  </section>
+
+  <section class="ch" id="outcome">
+    <div class="ch-head rv"><div class="l"><span class="n">CHAPTER 11</span><span class="t">Outcome and learnings</span></div><h2>Completed, and what I would measure next.</h2></div>
+    <div class="body"><div></div><div>
+      <div class="cert">
+        <div class="cert-main rv"><span class="label">Chanakya UG Fellowship 2023</span><b>Completed at iHub Divya Sampark, IIT Roorkee, with a project certificate cum letter of recommendation.</b><p>Delivered: website, doctor and patient app design, and clinic dashboard.</p></div>
+        <div class="iter rv"><span class="label">What iteration changed</span><ul id="iter"></ul></div>
+      </div>
+      <h3 class="sub">What I would measure in a pilot</h3>
+      <p class="p">The project ended at design, testing and feedback with doctors, not a field rollout, so I have no field metrics to show. These are the numbers I would track first, each tied to a decision above.</p>
+      <div class="measure" id="measure"></div>
+      <h3 class="sub">What I learned</h3>
+      <div class="learn" id="learn"></div>
+    </div></div>
+  </section>
+</main>
+
+<footer class="end">
+  <div class="end-in">
+    <a class="go" href="../germanly/"><span><small>Next case study</small>Germanly</span><span class="arr" aria-hidden="true">→</span></a>
+    <div class="row"><span>Abhishek Jha · Product and UX Designer</span><a href="../">All case studies</a><a href="#top">Back to top ↑</a></div>
+  </div>
+</footer>
+
+<script src="data.js" charset="utf-8"></script>
+<script>
+(function(){
+const D = window.ONCAREA, $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const list = a => `<ul>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
+const pad = i => String(i + 1).padStart(2, '0');
+const img = (n, alt, cls = '') => `<img src="images/${n}.webp" alt="${esc(alt || '')}" loading="lazy"${cls ? ` class="${cls}"` : ''}>`;
+const ALT = {
+  d_home:"Doctor home: next session, patient totals, add patient", d_appts:"Appointments by status", d_avail:"Weekly availability with time windows", d_menu:"Menu: wallet, profile, terms, support", d_wallet:"Wallet with coin balance and locked rewards message", d_profile:"Profile settings",
+  p_list:"Patient list with view report buttons", p_details:"Patient details: name, email, phone", p_habits:"Habits, pain and trismus questions", p_notes:"Extra details notes", p_camera:"Camera readiness: 8MP and proper lighting", p_scan:"Guided scan with mouth overlay on live camera", p_scan_guide:"Scan overlay and angle thumbnails", p_added:"Patient details added confirmation", p_report:"Patient report with images and answers",
+  s_splash:"Oncarea splash", s_login:"Continue with Google", s_terms:"Terms not yet accepted, continue disabled", s_terms_ok:"Terms accepted, continue enabled",
+  o_1:"Onboarding: streamline patient connections", o_2:"Onboarding: quick video meets", o_3:"Onboarding: manage check up reports"
+};
+
+/* Marquee: the words the product actually uses */
+const words = ['Tobacco: gutka, khaini, betel nut','Pain opening the mouth','3 finger trismus test','Camera 8MP or more','Proper lighting','Multiple angles','Doctor reviews every case','No diagnosis on the patient\'s phone'];
+const w = words.map(x => `<span>${esc(x)}</span><span style="color:var(--accent)">●</span>`).join('');
+$('#track').innerHTML = w + w;
+
+/* Stats */
+$('#stats').innerHTML = D.stats.map((s, i) => {
+  const t = 't' + (i + 1), num = `<div class="num" data-count="${esc(s.n)}">${esc(s.n)}${s.unit ? `<small>${esc(s.unit)}</small>` : ''}</div>`;
+  return i === 0 ? `<div class="sc ${t}"><div class="band hatch"></div>${num}<p>${s.t}</p></div>`
+       : i === 2 ? `<div class="sc ${t} hatch">${num}<p>${s.t}</p></div>`
+       : `<div class="sc ${t}">${num}<p>${s.t}</p></div>`;
+}).join('');
+
+/* Chain */
+$('#chain').innerHTML = D.breaks.map((b, i) => `<div class="link"><div class="node"><i>${pad(i)}</i><b>${esc(b.k)}</b></div><div class="crack${i === 2 ? '' : ' bad'}"></div><h3>${esc(b.t)}</h3><p>${esc(b.p)}</p></div>`).join('');
+
+/* Research */
+$('#nums').innerHTML = D.numbers.map(n => `<div><b data-count="${esc(n.n)}">${esc(n.n)}</b><span>${esc(n.t)}</span></div>`).join('');
+$('#methods').innerHTML = D.methods.map(m => `<div class="tk rv"><span class="tk-n">${esc(m.k)}</span><b>${esc(m.t)}</b><p>${esc(m.p)}</p><span class="tk-o">${esc(m.o)}</span></div>`).join('');
+$('#qs').innerHTML = D.questions.map(q => `<div class="q${q.who === 'Patients' ? ' pt' : ''}"><span class="label">${esc(q.who)}</span><p>${esc(q.q)}</p></div>`).join('');
+$('#funnel').innerHTML = D.insights.map((x, i) => `<div class="ins"><span>${pad(i)}</span><b>${esc(x.t)}</b><span class="ar" aria-hidden="true">→</span><p>${esc(x.to)}</p></div>`).join('');
+$('#niche').innerHTML = D.niche.map((n, i) => `<div class="notch${i ? ' orange' : ' dark'}"><span class="k">${pad(i)}</span><h4>${esc(n.t)}</h4><p>${esc(n.p)}</p></div>`).join('');
+
+/* Personas */
+$('#personas').innerHTML = D.personas.map(p => `<article class="pers ${p.tone} rv">
+  <div class="pers-top"><span class="av" aria-hidden="true">${esc(p.name.replace('Dr. ', '')[0])}</span><div><b>${esc(p.name)}</b><small>${esc(p.role)}</small></div></div>
+  <q>${esc(p.says)}</q>
+  <p class="about">${esc(p.about)}</p>
+  <div class="emp"><div><span class="label">Thinks</span>${esc(p.thinks)}</div><div><span class="label">Feels</span>${esc(p.feels)}</div><div><span class="label">Does</span>${esc(p.does)}</div></div>
+  <div class="pn"><div class="pain"><span class="label">Pain points</span>${list(p.pain)}</div><div><span class="label">Needs</span>${list(p.needs)}</div></div>
+</article>`).join('');
+
+/* Shifts */
+$('#shifts').innerHTML = D.shifts.map(s => `<div class="shift"><span class="from">${esc(s.from)}</span><span class="ar" aria-hidden="true">→</span><span class="to">${esc(s.to)}<small>${esc(s.why)}</small></span></div>`).join('');
+
+/* Architecture and roles */
+$('#arch').innerHTML = `<div class="arch-root">Oncarea clinical architecture</div>
+  <div class="layers">${D.architecture.map((l, i) => `<div class="layer${i === 2 ? ' hot' : ''}"><span>${esc(l.k)}</span><b>${esc(l.t)}</b>${list(l.items)}</div>`).join('')}</div>
+  <div class="principles"><span class="label">System principles</span>${D.principles.map(p => `<b>${esc(p)}</b>`).join('')}</div>`;
+const lvl = ['Cannot', 'Takes part', 'Owns it'];
+$('#matrix').innerHTML = `<thead><tr><th scope="col">Action</th>${D.roles.map(r => `<th scope="col">${esc(r)}</th>`).join('')}</tr></thead><tbody>${D.matrix.map(r => `<tr><td>${esc(r[0])}</td>${r.slice(1).map(v => `<td><i class="dot d${v}" role="img" aria-label="${lvl[v]}"></i></td>`).join('')}</tr>`).join('')}</tbody>`;
+
+/* Blueprint */
+$('#deliv').innerHTML = D.deliveries.map((d, i) => `<div class="notch${i === 0 ? ' orange' : i === 2 ? ' dark' : ''}"><span class="k">${pad(i)}</span><h4>${esc(d.t)}</h4><p>${esc(d.p)}</p></div>`).join('');
+const ia = D.ia;
+$('#ia').innerHTML = `<div class="ft-root"><span>${esc(ia.root.t)}</span><small>${esc(ia.root.s)}</small></div>
+  <div class="ft-cols">${ia.cols.map((c, i) => `<div class="ft-col${i === 0 ? ' hot' : ''}"><div class="ft-node"><b>${esc(c.t)}</b><small>${esc(c.s)}</small></div>${list(c.items)}</div>`).join('')}</div>
+  <div class="ft-deep"><span class="label">From Home, screening</span>${ia.deep.map((d, i) => `${i ? '<i aria-hidden="true">→</i>' : ''}<span>${esc(d)}</span>`).join('')}</div>`;
+$('#features').innerHTML = `<div class="ft-root"><span>Oncarea doctor</span><small>Eight feature groups</small></div>
+  <div class="ft-cols">${D.doctorModules.map((c, i) => `<div class="ft-col${i === 2 || i === 3 ? ' hot' : ''}"><div class="ft-node"><b>${esc(c.t)}</b></div>${list(c.items)}</div>`).join('')}</div>`;
+
+let flowTimer;
+function showFlow(id){
+  const f = D.flows.find(x => x.id === id);
+  $$('#flowtabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.id === id));
+  $('#flowcard').innerHTML = `<div class="fl-head"><b>${esc(f.label)}</b><span>${esc(f.who)}</span></div><ol class="fl">${f.steps.map((s, i) => `<li><span>${i + 1}</span>${esc(s)}</li>`).join('')}</ol><p class="fl-note">${f.note}</p>`;
+  const lis = $$('#flowcard .fl li');
+  clearInterval(flowTimer);
+  if (reduce) { lis.forEach(l => l.classList.add('on')); return; }
+  let k = 0; flowTimer = setInterval(() => { if (k < lis.length) lis[k++].classList.add('on'); else clearInterval(flowTimer); }, 380);
+}
+$('#flowtabs').innerHTML = D.flows.map(f => `<button type="button" role="tab" data-id="${f.id}">${esc(f.label)}</button>`).join('');
+$$('#flowtabs button').forEach(b => b.addEventListener('click', () => showFlow(b.dataset.id)));
+showFlow(D.flows[0].id);
+
+/* Decisions */
+$('#dgrid').innerHTML = D.decisions.map((d, i) => `<a class="notch${i === 0 ? ' orange' : i === 5 ? ' dark' : ''}" href="#${d.id}"><span class="k">${pad(i)}</span><span></span><h4>${esc(d.short)}</h4></a>`).join('');
+const frame = (n, t) => `<div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>${esc(t)}</span></div>${img(n, t)}</div>`;
+$('#decs').innerHTML = D.decisions.map((d, i) => {
+  let stage = '';
+  if (d.split) stage = `<div class="stagegrid"><div class="phones">${d.screens.map(s => img(s, ALT[s])).join('')}</div><div class="seesplit" style="grid-template-columns:minmax(0,1fr)"><div class="yes"><span class="label">What the patient gets</span>${list(d.split.yes)}</div><div class="no"><span class="label">What the patient never sees</span>${list(d.split.no)}</div></div></div>`;
+  else {
+    if (d.screens) stage += `<div class="phones">${d.screens.map(s => img(s, ALT[s])).join('')}</div>`;
+    if (d.web) stage += `<div class="webs">${d.web.map(n => frame(n, (D.web.find(x => x.img === n) || {}).url || 'Oncarea')).join('')}</div>`;
+  }
+  return `<article class="dec" id="${d.id}">
+    <div class="dec-head rv"><div><span class="k">Decision ${pad(i)} · ${esc(d.short)}</span><h3>${esc(d.title)}</h3></div><div class="why">${d.why.map(p => `<p>${esc(p)}</p>`).join('')}</div></div>
+    <figure class="dec-stage rv">${stage}<figcaption>${esc(d.caption)}</figcaption></figure>
+    <div class="specs rv"><div class="spec"><span class="label">What it does</span>${list(d.does)}</div><div class="spec"><span class="label">Research behind it</span><p>${esc(d.link)}</p></div><div class="spec dk"><span class="label">The trade off</span><p>${esc(d.trade)}</p></div></div>
+  </article>`;
+}).join('');
+
+/* Screens */
+$('#sgroups').innerHTML = D.screenGroups.map(g => `<div class="sgroup rv"><div class="shead"><b>${esc(g.t)}</b><span class="label">${g.s.length} screens · scroll</span></div><div class="srow" tabindex="0" aria-label="${esc(g.t)} screens">${g.s.map(s => img(s, ALT[s])).join('')}</div></div>`).join('');
+$('#webwall').innerHTML = D.web.map(x => `<figure class="rv">${frame(x.img, x.url)}<figcaption>${esc(x.t)}</figcaption></figure>`).join('');
+
+/* Style guide */
+const S = D.style, light = h => { const n = parseInt(h.slice(1), 16); return ((n >> 16) * 299 + ((n >> 8) & 255) * 587 + (n & 255) * 114) / 1000 > 150; };
+const sw = ([k, h, note]) => `<div class="sw"><i style="background:${h}"></i><b>${esc(k)}</b><code>${h}</code>${note ? `<small>${esc(note)}</small>` : ''}</div>`;
+$('#rampP').innerHTML = S.primary.map(sw).join('');
+$('#rampN').innerHTML = S.neutral.map(sw).join('');
+$('#rampS').innerHTML = S.semantic.map(sw).join('');
+$('#tscale').innerHTML = S.type.map(([n, wgt, px, sample]) => `<div class="trow"><span class="label">Poppins ${esc(n)}</span><p style="font-weight:${wgt};font-size:clamp(${Math.max(15, px * .55)}px,${px / 12}vw,${px}px)">${esc(sample)}</p><code>${px}px</code></div>`).join('');
+$('#rules').innerHTML = S.rules.map(([b, p]) => `<div><b>${esc(b)}</b><p>${esc(p)}</p></div>`).join('');
+$$('.tg').forEach(t => t.addEventListener('click', () => t.setAttribute('aria-checked', t.getAttribute('aria-checked') !== 'true')));
+$$('#kit input[name="kq1"]').forEach(r => r.addEventListener('change', () => { const st = $$('#kstep i'); st[2].classList.add('on'); }));
+
+/* Outcome */
+$('#iter').innerHTML = D.outcome.iterations.map(x => `<li>${esc(x)}</li>`).join('');
+$('#measure').innerHTML = D.outcome.measure.map(([b, p], i) => `<div><span>${pad(i)}</span><b>${esc(b)}</b><p>${esc(p)}</p></div>`).join('');
+$('#learn').innerHTML = D.learnings.map(([b, p]) => `<div class="rv"><b>${esc(b)}</b><p>${esc(p)}</p></div>`).join('');
+
+/* Mobile chapter menu */
+const mb = $('#menuBtn'), menu = $('#menu');
+mb.addEventListener('click', () => { const o = !menu.classList.contains('open'); menu.classList.toggle('open', o); mb.setAttribute('aria-expanded', o); });
+menu.addEventListener('click', e => { if (e.target.closest('a')) { menu.classList.remove('open'); mb.setAttribute('aria-expanded', false); } });
+
+/* Scroll: progress, active chapter, word fill, hero parallax */
+const nav = $('#nav'), prog = $('#progress'), links = $$('.links a'), secs = links.map(a => $(a.getAttribute('href')));
+const scrubs = $$('.scrub').map(el => { const ws = el.textContent.trim().split(/\s+/); el.innerHTML = ws.map(x => `<span class="w">${esc(x)}</span>`).join(' '); return { el, ws: [...el.querySelectorAll('.w')], live: el.getBoundingClientRect().top > innerHeight * .6 }; });
+const hp = $('#heroPhones');
+let ticking = false;
+function onScroll(){
+  ticking = false;
+  const h = document.documentElement, vh = innerHeight;
+  prog.style.transform = `scaleX(${h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight)})`;
+  nav.classList.toggle('scrolled', h.scrollTop > 10);
+  let cur = -1; secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < 160) cur = i; });
+  links.forEach((a, i) => a.classList.toggle('on', i === cur));
+  if (reduce) return;
+  scrubs.forEach(({ el, ws, live }) => {
+    if (!live) return;
+    const r = el.getBoundingClientRect(), p = Math.min(1, Math.max(0, (vh * .92 - r.top) / (r.height + vh * .3)));
+    const k = Math.round(p * ws.length); ws.forEach((w, i) => w.classList.toggle('dim', i >= k));
+  });
+  if (hp) hp.style.setProperty('--py', Math.min(40, h.scrollTop * .06) + 'px');
+}
+addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+addEventListener('resize', onScroll);
+
+/* Reveal and count up, only for things below the first screen */
+function countUp(el){
+  const m = el.dataset.count.match(/^([^\d]*)([\d,]+)(.*)$/); if (!m) return;
+  const small = el.querySelector('small'), tail = small ? small.outerHTML : '';
+  const to = +m[2].replace(/,/g, ''), t0 = performance.now(), dur = 1300;
+  const f = t => { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3); el.innerHTML = esc(m[1] + Math.round(to * e) + m[3]) + tail; if (p < 1) requestAnimationFrame(f); };
+  requestAnimationFrame(f);
+}
+if (!reduce && 'IntersectionObserver' in window){
+  const below = el => el.getBoundingClientRect().top > innerHeight * .92;
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const t = e.target; t.classList.remove('pre');
+    if (t.dataset.count) countUp(t);
+    io.unobserve(t);
+  }), { threshold: .15, rootMargin: '0px 0px -6% 0px' });
+  $$('.rv, .shift, .ins').forEach(el => { if (below(el)) { el.classList.add('pre'); io.observe(el); } });
+  $$('[data-count]').forEach(el => { if (below(el)) io.observe(el); });
+}
+onScroll();
+})();
+</script>

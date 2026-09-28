@@ -24,6 +24,9 @@ p{margin:0;color:var(--ink2);max-width:34em;font-size:clamp(19px,2vw,23px);line-
 .pills{display:flex;flex-wrap:wrap;gap:8px}
 .pill{padding:6px 13px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:var(--ink2)}
 .go{display:inline-flex;gap:10px;align-items:center;font-weight:500;color:var(--accent)}
+.card .vis.onc{background:linear-gradient(150deg,#EEEDFF,#C4C1FF);justify-content:center;gap:clamp(10px,2vw,24px);align-items:flex-end}
+.card .vis.onc img{width:min(34%,175px);border-radius:0;box-shadow:none;filter:drop-shadow(0 24px 30px rgba(24,20,48,.25));margin-bottom:-6%}
+.card .vis.onc img+img{margin-bottom:-14%}
 @media (max-width:820px){.card{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
@@ -45,6 +48,18 @@ p{margin:0;color:var(--ink2);max-width:34em;font-size:clamp(19px,2vw,23px);line-
       <span class="go">Read the case study <span aria-hidden="true">→</span></span>
     </div>
     <div class="vis"><img src="germanly/motion/landing_poster.webp" alt="Germanly landing page"></div>
+  </a>
+  <a class="card" href="oncarea/">
+    <div class="txt">
+      <div style="display:grid;gap:14px">
+        <span class="label">02 · 2023</span>
+        <h2>Oncarea</h2>
+        <p style="font-size:18px">Why rural oral cancer screening breaks long before the AI does, and a doctor led system where AI only assists. Chanakya Fellowship, IIT Roorkee.</p>
+        <div class="pills"><span class="pill">Healthcare</span><span class="pill">UX Research</span><span class="pill">System Design</span><span class="pill">App and Web</span></div>
+      </div>
+      <span class="go">Read the case study <span aria-hidden="true">→</span></span>
+    </div>
+    <div class="vis onc"><img src="oncarea/images/p_scan.webp" alt="Oncarea guided oral scan"><img src="oncarea/images/p_habits.webp" alt="Oncarea patient habits questions"></div>
   </a>
 </main>
 </body>
