@@ -3,24 +3,24 @@
   "trailingSlash": true,
   "rewrites": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "germanly.uxabhi.com"
         }
       ],
-      "destination": "/germanly/:path*"
+      "destination": "/germanly/$1"
     },
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [
         {
           "type": "host",
           "value": "oncarea.uxabhi.com"
         }
       ],
-      "destination": "/oncarea/:path*"
+      "destination": "/oncarea/$1"
     },
     {
       "source": "/",
