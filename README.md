@@ -8,6 +8,7 @@ Each case study folder contains:
 
 * **index.html**: the designed case study page
 * **data.js**: mock data service; every number, quote and chart reads from here, sample values are marked
+* **paper/**: web version and PDF of the CHI 2027 submission, One Payment, One Path
 * **CASE_STUDY.md**: structure and written content
 * **images/**: screenshots of the live product
 * **motion/**: animated mockups of the product in action (MP4 for the website, GIF for quick preview, WebP poster frames)

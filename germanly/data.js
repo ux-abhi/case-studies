@@ -9,7 +9,7 @@
 */
 window.GERMANLY = {
   meta: {
-    showSampleMarkers: true,
+    showSampleMarkers: false,
     title: "Germanly",
     subtitle: "A German learning product built from my own first year in Germany",
     role: "Founder, product and UX designer",
@@ -22,8 +22,8 @@ window.GERMANLY = {
   headline: [
     { value: "120+", label: "learners using it today", real: true },
     { value: "3,000+", label: "impressions on launch day", real: true },
-    { value: "14", label: "learner interviews", real: true },
-    { value: "+34%", label: "more words recalled after 7 days than with Duolingo", real: false },
+    { value: "20", label: "learners in a two to four week pilot study", real: true },
+    { value: "19/20", label: "felt more confident holding a conversation", real: true },
     { value: "€19", label: "once, for twelve months", real: true }
   ],
 
@@ -127,7 +127,7 @@ window.GERMANLY = {
       api: ["The due count comes from the flashcard progress table, already computed per user, so the band costs no extra request", "Row Level Security in Supabase means each learner only ever reads their own rows"],
       system: "Step 2, audit before tokens: measuring screens showed which pattern to standardise first.",
       micro: ["The activity chart shows four weeks of dots, not a streak, so a missed day does not look like failure", "Speaking practice appears as a waitlist band above the review only after a first lesson is done", "Welcome back uses the first name only"],
-      test: { versus: "Duolingo shows one path but hides what you are forgetting. Anki shows what is due and nothing else. Today shows both.", who: "Returning learners with a few minutes between classes or shifts", result: "Lesson completion 8% before redesign, 27% after (target 35%)", real: false }
+      test: { versus: "Duolingo shows one path but hides what you are forgetting. Anki shows what is due and nothing else. Today shows both.", who: "Returning learners with a few minutes between classes or shifts", result: "Only 8 of 101 learners had finished a lesson before the redesign. In the pilot, 4 of 20 dropped every other tool and the median agreed they now use fewer tools: 6 of 7", real: true }
     },
     {
       id: "D3",
@@ -153,7 +153,7 @@ window.GERMANLY = {
       api: ["Scheduling is a simplified SM 2 algorithm: again returns today, good grows the gap from 1 to 6 days and beyond, easy grows it faster", "Each rating writes one row, so the due count updates without reloading"],
       system: "Step 4, semantic tokens: der, die and das became tokens, not colours, so every component uses the same meaning.",
       micro: ["Flip is a real button, not only a tap on the card, for keyboard and screen reader users", "The queue shows 3 of 12 so learners know the session is short", "Listen plays the word before the meaning is revealed"],
-      test: { versus: "Six learners studied 30 new words in Duolingo and 30 in Germanly over the same week. Duolingo keeps people coming back more often. Germanly made the words stick.", who: "Learners preparing for A1 and B1 exams with a fixed word list", result: "Words recalled after 7 days: 37% with Duolingo, 50% with Germanly, a 34% relative gain", real: false }
+      test: { versus: "Duolingo is excellent at bringing people back every day. Germanly puts the effort into recall: cards come back right before you would forget them, with the article always in colour.", who: "Learners preparing for A1 and B1 exams with a fixed word list", result: "Confidence holding a basic conversation rose from 3 to 4 of 7 in the pilot; 19 of 20 learners improved", real: true }
     },
     {
       id: "D5",
@@ -218,8 +218,31 @@ window.GERMANLY = {
       api: ["Stripe Checkout in payment mode, not subscription mode, so there is nothing to cancel", "Resend sends lifecycle emails from a daily cron, and every send is logged so no one gets the same email twice"],
       system: "Voice is part of the system: a short list of words we use and words we never use sits beside the tokens.",
       micro: ["Unsubscribe is one click with no login", "Emails are signed by the founder and replies reach a real inbox", "Discount codes expire on a stated date, never a countdown timer"],
-      test: { versus: "Babbel and Duolingo Super renew automatically. Lingoda costs €300 or more a month. €19 once is less than one textbook.", who: "Students on a budget and learners with a fixed deadline", result: "Free to paid conversion 4% to 9%, email open rate 46%", real: false }
+      test: { versus: "Babbel and Duolingo Super renew automatically. Lingoda costs €300 or more a month. €19 once is less than one textbook.", who: "Students on a budget and learners with a fixed deadline", result: "Before the pilot learners expected a subscription to motivate them more (5 vs 3). After living with one payment, most said a subscription would have made them use it less. Ownership predicted who kept going (r = .47); guilt did not", real: true }
     }
+  ],
+
+  pilotParticipants: [
+      { id: "P01", age: 29, from: "Poland", background: "Graphic designer, Cologne; moved for partner" },
+      { id: "P02", age: 34, from: "India", background: "Software engineer, Munich; relocated for work" },
+      { id: "P03", age: 41, from: "Syria", background: "Resettled; integration course requirement" },
+      { id: "P04", age: 23, from: "USA", background: "Exchange student, Berlin" },
+      { id: "P05", age: 26, from: "Japan", background: "Design professional" },
+      { id: "P06", age: 63, from: "UK", background: "Retiree, Bavaria" },
+      { id: "P07", age: 22, from: "Nigeria", background: "University student" },
+      { id: "P08", age: 31, from: "Australia", background: "Relocated; partner is German" },
+      { id: "P09", age: 27, from: "Brazil", background: "Au pair" },
+      { id: "P10", age: 38, from: "Morocco", background: "Blue card job seeker" },
+      { id: "P11", age: 30, from: "Italy", background: "PhD student" },
+      { id: "P12", age: 25, from: "UK", background: "Gamer" },
+      { id: "P13", age: 28, from: "UK (Indian heritage)", background: "Moving to Berlin for a startup job" },
+      { id: "P14", age: 45, from: "UAE", background: "Spouse of a diplomat" },
+      { id: "P15", age: 35, from: "Ireland", background: "Freelance software consultant, Berlin" },
+      { id: "P16", age: 24, from: "Nigeria", background: "Master's student, engineering" },
+      { id: "P17", age: 40, from: "Portugal", background: "Restaurant owner opening a German branch" },
+      { id: "P18", age: 33, from: "Turkey", background: "Married to a German for 10 years" },
+      { id: "P19", age: 58, from: "USA", background: "Retiree, relocated with spouse" },
+      { id: "P20", age: 21, from: "China", background: "International exchange student" }
   ],
 
   emails: [
@@ -323,33 +346,37 @@ window.GERMANLY = {
     }
   ],
 
-  comparison: {
-    note: "6 learners used Duolingo and Germanly for the same 3 weeks, 30 new words in each",
-    retention: {
-      days: [1, 3, 7, 14, 21],
-      duolingo: [92, 84, 71, 60, 55],
-      germanly: [85, 70, 52, 41, 38]
-    },
-    learning: [
-      { metric: "Words recalled after 7 days", duolingo: 37, germanly: 50 },
-      { metric: "Correct article (der, die, das)", duolingo: 48, germanly: 71 },
-      { metric: "Sentences written without help", duolingo: 22, germanly: 46 }
+  pilot: {
+    source: "One Payment, One Path (CHI 2027 submission). Pre and post questionnaires plus matched interviews, n = 20, Wilcoxon signed rank tests and Spearman correlations.",
+    prepost: [
+      { item: "Confidence holding a basic conversation", pre: 3, post: 4, p: "< .0001", note: "19 of 20 improved, none declined" },
+      { item: "Learning because I want to, not because I have to", pre: 4, post: 5, p: ".0006", note: "Motivation became more self directed" }
     ],
-    real: false
+    belief: { subscriptionBefore: 5, oneTimeBefore: 3, pBefore: ".004", sameUseAfter: 3 },
+    correlations: [
+      { item: "Feels like ownership, not renting", median: 6, r: 0.47, p: ".037" },
+      { item: "Thought about money already spent", median: 5, r: 0.06, p: ".81" },
+      { item: "Felt obligated because I had paid", median: 5, r: 0.05, p: ".82" }
+    ],
+    tools: { baselineMedian: 2, fewerToolsMedian: 6, droppedAll: 4, keptOne: 16 },
+    real: true
   },
 
   growth: {
-    weeks: ["1 Jun", "8 Jun", "15 Jun", "22 Jun", "29 Jun", "6 Jul", "13 Jul", "20 Jul", "27 Jul", "3 Aug", "10 Aug", "17 Aug", "24 Aug", "31 Aug"],
-    signups: [38, 27, 18, 13, 4, 3, 3, 2, 3, 3, 4, 6, 3, 2],
-    marks: [{ week: 0, label: "Launch" }, { week: 11, label: "Redesign live" }],
-    note: "Monthly totals are real (96 in June, 13 in July, 120+ today). The weekly split is sample.",
-    real: false
+    points: [
+      { date: "30 Jun", learners: 96, label: "Launch month" },
+      { date: "23 Jul", learners: 101, label: "101 learners" },
+      { date: "13 Aug", learners: 115, label: "Redesign ships" },
+      { date: "28 Sep", learners: 120, label: "Today" }
+    ],
+    note: "Cumulative learners. 96 signups in June from learner communities, 13 in July, then steady growth after the redesign.",
+    real: true
   },
 
   learnings: [
     { title: "Being the user is a head start, not research", body: "My first plan was built on my own assumptions. Fourteen conversations cut the scope in half and changed the business model." },
     { title: "Measure the interface", body: "Counting controls and primary actions turned it feels messy into a fix I could ship in a day." },
-    { title: "Retention and learning are different goals", body: "Duolingo wins on coming back. Germanly wins on what sticks. I chose learning and now design retention around it, not against it." },
+    { title: "Retention and learning are different goals", body: "Duolingo is built for coming back. I built Germanly for what sticks, and the pilot showed ownership, not guilt, is what keeps people going." },
     { title: "Know the API to design the state", body: "Rate limits, structured output and payment modes shaped the interface as much as any sketch." }
   ],
 
