@@ -833,7 +833,7 @@ a.drow:hover .arr{transform:translateX(4px);color:var(--accent)}
 
 <section class="in nxs rv" id="next">
   <div class="nx-line" aria-hidden="true"></div>
-  <a class="nx" href="../germanly/" aria-label="Next case study: Germanly">
+  <a class="nx" href="../germanly/" data-case="germanly" aria-label="Next case study: Germanly">
     <div class="nx-l">
       <div class="nx-top"><span class="lab"><i class="blink" aria-hidden="true"></i>Next case study</span><span class="lab">01 · 2026</span></div>
       <h2 class="nx-title" aria-hidden="true">Germanly</h2>
@@ -841,9 +841,9 @@ a.drow:hover .arr{transform:translateX(4px);color:var(--accent)}
       <div class="nx-tags"><span class="tag">120+ learners</span><span class="tag">CHI 2027 under review</span><span class="tag">13 weeks</span></div>
       <span class="nx-go"><span class="nx-circle" aria-hidden="true"><span>→</span><span>→</span></span>Read the case study</span>
     </div>
-    <figure class="nx-img"><div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>mygermanly.com</span></div><img src="../germanly/motion/landing_poster.webp" alt="" loading="lazy"></div></figure>
+    <figure class="nx-img"><div class="frame"><div class="frame-bar"><i></i><i></i><i></i><span>mygermanly.com</span></div><img src="images/next_germanly.webp" alt="" loading="lazy"></div></figure>
   </a>
-  <div class="nx-links"><a class="pill" href="https://uxabhi.com">Back to portfolio <i aria-hidden="true"></i></a><a class="pill" href="../">All case studies <i aria-hidden="true"></i></a></div>
+  <div class="nx-links"><a class="pill" href="https://uxabhi.com">Back to portfolio <i aria-hidden="true"></i></a><a class="pill" href="../" data-case="all">All case studies <i aria-hidden="true"></i></a></div>
 </section>
 
 <dialog class="dlg" id="certDlg" aria-label="Fellowship certificate">
@@ -853,7 +853,7 @@ a.drow:hover .arr{transform:translateX(4px);color:var(--accent)}
 
 <footer class="foot">
   <div class="in">
-    <div class="grid"><p>Designing for the moment<br>a doctor has to decide.</p><ul><li><a href="#top">Overview</a></li><li><a href="#research">Research</a></li><li><a href="#decisions">Decisions</a></li><li><a href="#style">Style guide</a></li></ul><ul><li><a href="https://uxabhi.com">Back to portfolio</a></li><li><a href="../">All case studies</a></li><li><a href="../germanly/">Germanly</a></li><li><a href="#top">Back to top ↑</a></li></ul></div>
+    <div class="grid"><p>Designing for the moment<br>a doctor has to decide.</p><ul><li><a href="#top">Overview</a></li><li><a href="#research">Research</a></li><li><a href="#decisions">Decisions</a></li><li><a href="#style">Style guide</a></li></ul><ul><li><a href="https://uxabhi.com">Back to portfolio</a></li><li><a href="../" data-case="all">All case studies</a></li><li><a href="../germanly/" data-case="germanly">Germanly</a></li><li><a href="#top">Back to top ↑</a></li></ul></div>
     <div class="wm" aria-hidden="true">Oncarea</div>
     <div class="base"><span class="lab">Abhishek Jha · Product and UX Designer</span><span class="lab">Case study 02 · 2023</span></div>
   </div>
@@ -1082,5 +1082,11 @@ if (!reduce && 'IntersectionObserver' in window){
   $$('[data-count]').forEach(el => { if (below(el)) io.observe(el); });
 }
 onScroll();
+})();
+</script>
+<script>
+/* On the uxabhi.com subdomains each case study lives at its own root, so links between them become full addresses. */
+(function(){ if (!/(^|\.)uxabhi\.com$/.test(location.hostname)) return;
+  document.querySelectorAll('a[data-case]').forEach(function(a){ var c = a.getAttribute('data-case'); a.href = c === 'all' ? 'https://uxabhi.com' : 'https://' + c + '.uxabhi.com/'; });
 })();
 </script>

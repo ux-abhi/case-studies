@@ -1,4 +1,30 @@
 {
   "cleanUrls": true,
-  "trailingSlash": true
+  "trailingSlash": true,
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "germanly.uxabhi.com"
+        }
+      ],
+      "destination": "/germanly/:path*"
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "oncarea.uxabhi.com"
+        }
+      ],
+      "destination": "/oncarea/:path*"
+    },
+    {
+      "source": "/",
+      "destination": "/cases/"
+    }
+  ]
 }

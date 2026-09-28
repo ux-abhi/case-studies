@@ -857,7 +857,7 @@ details.more[open] summary{margin-bottom:14px}
   <div class="end-in">
     <span class="label" style="color:rgba(255,255,255,.85)">Learn your first German word in five seconds</span>
     <a class="go" href="https://www.mygermanly.com" target="_blank" rel="noopener"><span>Try Germanly</span><span class="arr" aria-hidden="true">→</span></a>
-    <div class="row"><span>Abhishek Jha · Product and UX Designer · 2026</span><span style="display:flex;gap:18px;flex-wrap:wrap"><a href="https://uxabhi.com">Back to portfolio</a><a href="../">All case studies</a><a href="paper/">Research paper</a><a href="#top">Back to top</a></span></div>
+    <div class="row"><span>Abhishek Jha · Product and UX Designer · 2026</span><span style="display:flex;gap:18px;flex-wrap:wrap"><a href="https://uxabhi.com">Back to portfolio</a><a href="../" data-case="all">All case studies</a><a href="paper/">Research paper</a><a href="#top">Back to top</a></span></div>
   </div>
 </footer>
 
@@ -1126,5 +1126,11 @@ if (!reduce && 'IntersectionObserver' in window){
   $$('.dec video').forEach(v => { v.preload = 'metadata'; v.controls = true; });
 }
 onScroll();
+})();
+</script>
+<script>
+/* On the uxabhi.com subdomains each case study lives at its own root, so links between them become full addresses. */
+(function(){ if (!/(^|\.)uxabhi\.com$/.test(location.hostname)) return;
+  document.querySelectorAll('a[data-case]').forEach(function(a){ var c = a.getAttribute('data-case'); a.href = c === 'all' ? 'https://uxabhi.com' : 'https://' + c + '.uxabhi.com/'; });
 })();
 </script>
