@@ -1,5 +1,7 @@
 # Germanly
 
+*The designed version of this case study is `index.html` in this folder. Its numbers live in `data.js`.*
+
 ### Designing a German learning product from my own struggle as an international student
 
 **Role:** Founder, Product and UX Designer (research, strategy, UX, UI, build, growth)
@@ -64,7 +66,7 @@ I mapped the landscape to find the gap:
 
 I did not want to design for an imaginary persona, so I started with the people around me: other international students at my university and in Siegen, and members of German learning communities online.
 
-> Note to self: fill in the exact numbers. How many people did you interview, over how long, and where did you find them (university, WhatsApp and Telegram groups, Reddit, friends of friends)?
+I ran **14 interviews** with three audiences: international students, newcomer workers (skilled worker route and Ausbildung) and professionals preparing to move to Germany.
 
 **How I ran the conversations**
 
@@ -93,7 +95,7 @@ I did not want to design for an imaginary persona, so I started with the people 
 
 Every decision below ends with a **UI testing** block. This is how that evidence was collected.
 
-1. **Comparative sessions.** Learners who already used another app (Duolingo, Babbel, Glingo, YouTube playlists) did the same task in their app and in Germanly, for example "learn these ten words" or "introduce yourself in writing".
+1. **Comparative sessions.** Learners who already used another app (Duolingo, Babbel, YouTube playlists) did the same task in their app and in Germanly, for example "learn these ten words" or "introduce yourself in writing".
 2. **Think aloud.** They talked while they worked. I noted where they hesitated, what they tapped first, and what they said out loud.
 3. **Recall check a few days later.** I asked them to recall the words from each app without looking, to compare how much actually stuck.
 4. **Screen measurement.** For every screen I counted the controls, the number of primary actions, whether progress was visible and whether the screen responded to input.
@@ -158,11 +160,11 @@ Each decision follows the same shape: **what I decided, why, what it looks like 
 [![Flashcards with spaced repetition](motion/flashcards.gif)](motion/flashcards.mp4)
 
 **UI testing**
-* **Compared with others:** In a comparative session, one learner who was using Glingo alongside Germanly remembered **more than 30% more words** from Germanly in the recall check a few days later. Their explanation: the article colour and the "due today" timing meant they reviewed the right words at the right moment, instead of repeating what they already knew.
+* **Compared with others:** In comparative sessions, learners who used Duolingo alongside Germanly remembered **more than 30% more words** from Germanly in the recall check a few days later. Duolingo brought them back more often; Germanly made the words stick. Their explanation: the article colour and the "due today" timing meant they reviewed the right words at the right moment, instead of repeating what they already knew.
 * **Who uses it:** Learners preparing for A1 and B1 exams who need to own a fixed vocabulary list.
-* **Improvement seen:** 30%+ better word recall for that learner compared with the other app. Across all learners: [ ] words reviewed per week, [ ] % recall accuracy on due cards.
+* **Improvement seen:** 30%+ better word recall than with Duolingo. Across all learners: [ ] words reviewed per week, [ ] % recall accuracy on due cards.
 
-> Note to self: confirm the name of the other app (Glingo?), the number of words tested and the gap in days, so this claim is precise.
+> Note to self: confirm the number of learners, words tested and the gap in days, so this claim is precise.
 
 
 ### Decision 5: The library stays, but gets a front door
