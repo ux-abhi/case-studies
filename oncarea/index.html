@@ -441,6 +441,36 @@ a.drow:hover .arr{transform:translateX(4px);color:var(--accent)}
 .srcs a:hover{text-decoration:underline}
 .srcs li:target{background:var(--tint)}
 
+/* Certificate */
+.cert{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.3fr);gap:clamp(18px,3.5vw,48px);align-items:start;margin-top:18px}
+.paper{all:unset;box-sizing:border-box;cursor:zoom-in;position:relative;display:block;background:#fff;padding:10px;border-radius:4px;box-shadow:0 30px 60px -30px rgba(24,20,48,.35),0 10px 20px -12px rgba(24,20,48,.2);transform:rotate(-2.5deg);transition:transform .7s var(--ease),box-shadow .7s var(--ease)}
+.paper::before{content:"";position:absolute;inset:6px -8px -8px 6px;background:#e9e7f7;border-radius:4px;z-index:-1;transform:rotate(3deg);transition:transform .7s var(--ease)}
+.paper img{display:block;width:100%;height:auto}
+.paper:hover,.paper:focus-visible{transform:rotate(0) translateY(-8px) scale(1.02);box-shadow:0 50px 80px -34px rgba(24,20,48,.45),0 14px 26px -14px rgba(24,20,48,.25)}
+.paper:hover::before{transform:rotate(5deg) translate(6px,6px)}
+.zoom{position:absolute;right:18px;bottom:18px;background:var(--ink);color:#fff;border-radius:999px;padding:7px 14px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s var(--ease)}
+.paper:hover .zoom,.paper:focus-visible .zoom{opacity:1;transform:none}
+.orow.big.pre .paper{transform:rotate(-8deg) translateY(40px);opacity:0}
+.paper{opacity:1}
+.cinfo{display:grid;gap:14px;align-content:start}
+.ctitle{font-size:clamp(24px,2.6vw,36px);letter-spacing:-.03em;line-height:1.12}
+.cinfo dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px;border-top:1px solid var(--ink)}
+.cinfo dl div{display:grid;gap:2px;padding:10px 0;border-bottom:1px solid var(--line)}
+.cinfo dt{font-size:12px;color:var(--muted)}
+.cinfo dd{margin:0;font-size:14.5px}
+.cinfo blockquote{margin:6px 0 0;padding-left:16px;border-left:2px solid var(--accent);font-size:16px;line-height:1.5;color:var(--ink2)}
+.cinfo cite{display:block;margin-top:6px;font-style:normal;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.cbtns{display:flex;flex-wrap:wrap;gap:8px}
+.dlg{border:0;padding:0;border-radius:10px;width:min(820px,94vw);max-height:92vh;overflow:auto;background:var(--bg);box-shadow:var(--shadow)}
+.dlg::backdrop{background:rgba(17,17,16,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.dlg[open]{animation:dlgin .5s var(--ease)}
+@keyframes dlgin{from{opacity:0;transform:translateY(24px) scale(.97)}}
+.dbar{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 12px 10px 16px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.dclose{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-size:14px;transition:transform .4s var(--ease),background .3s}
+.dclose:hover{transform:rotate(90deg);background:var(--soft)}
+.dlg img{display:block;width:100%;height:auto}
+@media (max-width:860px){.cert{grid-template-columns:minmax(0,1fr)}.paper{max-width:420px}.cinfo dl{grid-template-columns:minmax(0,1fr)}.dbar .lab{display:none}}
+
 /* Next case study */
 .nxs{margin-top:clamp(110px,13vw,180px);padding-bottom:clamp(60px,8vw,110px)}
 .nx-line{height:1px;background:var(--ink);transform-origin:left;transition:transform 1.4s var(--ease)}
@@ -783,7 +813,7 @@ a.drow:hover .arr{transform:translateX(4px);color:var(--accent)}
 <section class="sec in" id="outcome">
   <div class="award">
     <h2>2023<br>fellowship</h2>
-    <div class="r"><p>Completed, with a project certificate cum letter of recommendation. <span>The work ended at design and doctor feedback, so here is what I would measure next.</span></p><small class="lab">11 · Outcome</small></div>
+    <div class="r"><p>Completed and certified by iHUB DivyaSampark, IIT Roorkee. <span>The work ended at design and doctor feedback, so here is what I would measure next.</span></p><small class="lab">11 · Outcome</small></div>
   </div>
   <div id="orows"></div>
   <div class="table rv">
@@ -815,6 +845,11 @@ a.drow:hover .arr{transform:translateX(4px);color:var(--accent)}
   </a>
   <div class="nx-links"><a class="pill" href="https://uxabhi.com">Back to portfolio <i aria-hidden="true"></i></a><a class="pill" href="../">All case studies <i aria-hidden="true"></i></a></div>
 </section>
+
+<dialog class="dlg" id="certDlg" aria-label="Fellowship certificate">
+  <div class="dbar"><span class="lab">Chanakya UG Fellowship certificate · iHUB DivyaSampark, IIT Roorkee</span><span style="display:flex;gap:8px"><a class="pill" href="certificate.pdf" target="_blank" rel="noopener">PDF <i aria-hidden="true"></i></a><button class="dclose" type="button" aria-label="Close">✕</button></span></div>
+  <img src="images/certificate.webp" alt="Chanakya UG Fellowship certificate: Abhishek Jha completed the fellowship on Cancer Detection and Cancer Care Ecosystem under Prof. Partha Pratim Roy, 2 Nov 2022 to 30 Apr 2023">
+</dialog>
 
 <footer class="foot">
   <div class="in">
@@ -967,9 +1002,21 @@ $$('.tg').forEach(t => t.addEventListener('click', () => t.setAttribute('aria-ch
 $$('#kit input[name="kq1"]').forEach(r => r.addEventListener('change', () => $$('#kstep i')[2].classList.add('on')));
 
 /* Outcome */
-$('#orows').innerHTML = D.outcome.rows.map(r => r.big
-  ? `<div class="orow big rv"><span class="num">${r.n}</span><div><div class="t"><small>${esc(r.k)}</small><b>${esc(r.t)}</b></div><div class="bigcard"><div class="mini"><b>${esc(r.big)}<small>${esc(r.unit)}</small></b><i aria-hidden="true">→</i></div><div class="mid"><b>14 interviews</b><p>${esc(r.p)}</p></div><a class="black" href="#research">Research</a></div></div></div>`
+$('#orows').innerHTML = D.outcome.rows.map(r => r.cert
+  ? `<div class="orow big rv"><span class="num">${r.n}</span><div><div class="t"><small>${esc(r.k)}</small><b>${esc(r.t)}</b></div>
+    <div class="cert">
+      <button class="paper" type="button" id="certOpen" aria-label="Open the fellowship certificate"><img src="images/certificate_sm.webp" alt="Chanakya UG Fellowship certificate from iHUB DivyaSampark, IIT Roorkee" loading="lazy"><span class="zoom" aria-hidden="true">View</span></button>
+      <div class="cinfo"><span class="lab">Project title on the certificate</span><p class="ctitle">“${esc(r.cert.title)}”</p>
+        <dl>${r.cert.facts.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+        <blockquote>${esc(r.cert.quote)}<cite>From the certificate</cite></blockquote>
+        <div class="cbtns"><button class="pill" type="button" id="certOpen2">View certificate <i aria-hidden="true"></i></button><a class="pill" href="certificate.pdf" target="_blank" rel="noopener">Open PDF <i aria-hidden="true"></i></a></div>
+      </div>
+    </div></div></div>`
   : `<div class="orow"><span class="num">${r.n}</span><div class="t"><small>${esc(r.k)}</small><b>${esc(r.t)}</b></div></div>`).join('');
+const dlg = $('#certDlg');
+const openCert = () => { if (dlg.showModal) dlg.showModal(); else window.open('certificate.pdf'); };
+$('#certOpen').addEventListener('click', openCert); $('#certOpen2').addEventListener('click', openCert);
+dlg.addEventListener('click', e => { if (e.target === dlg || e.target.closest('.dclose')) dlg.close(); });
 $('#measure').innerHTML = D.outcome.measure.map(([b, p, t]) => `<div class="tr"><b>${esc(b)}</b><p>${esc(p)}</p><span class="tag">${esc(t)}</span></div>`).join('');
 $('#learn').innerHTML = D.learnings.map(([k, b, p]) => `<div class="feat rv"><div class="fh">${RING}<b>${esc(b)}</b><span>${esc(k)}</span></div><p>${esc(p)}</p></div>`).join('');
 

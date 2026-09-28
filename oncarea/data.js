@@ -4,11 +4,12 @@
    `sources` at the bottom. Nothing here is a measured Oncarea result. */
 window.ONCAREA = {
   meta: [
-    ["Project", "Oncarea, a cancer care ecosystem"],
+    ["Project", "Oncarea: Cancer Detection and Cancer Care Ecosystem"],
     ["Programme", "Chanakya UG Fellowship 2023"],
     ["Host", "iHub Divya Sampark, IIT Roorkee"],
     ["My role", "Interaction Designer and Research Lead"],
-    ["Duration", "24 weeks"],
+    ["Duration", "6 months, 2 Nov 2022 to 30 Apr 2023"],
+    ["Mentor", "Prof. Partha Pratim Roy"],
     ["Type", "Fellowship research, UX research and design"],
     ["Research", "4 doctors, 10 rural patients, 18+ articles, 12+ companies"],
     ["Delivered", "Website, doctor and patient app, clinic dashboard"],
@@ -338,7 +339,11 @@ window.ONCAREA = {
   outcome: {
     rows: [
       { n: "01", k: "Delivered", t: "Website, doctor and patient app, clinic dashboard" },
-      { n: "02", k: "Recognition", t: "Completed under the Chanakya UG Fellowship 2023", big: "24", unit: "weeks", p: "iHub Divya Sampark, IIT Roorkee. Project certificate cum letter of recommendation." },
+      { n: "02", k: "Recognition", t: "Chanakya UG Fellowship, completed and certified", cert: {
+        title: "Cancer Detection and Cancer Care Ecosystem",
+        facts: [["Issued by", "iHUB DivyaSampark, IIT Roorkee"], ["Programme", "Chanakya UG Fellowship"], ["Mentor", "Prof. Partha Pratim Roy"], ["Tenure", "2 Nov 2022 to 30 Apr 2023, 6 months"], ["Issued on", "23 Feb 2024"], ["Reference", "2023/TIH-IITR/312"]],
+        quote: "Throughout his tenure, Abhishek Jha demonstrated diligence, responsibility, and a commendable work ethic. We also observed him to be highly innovative in his approach."
+      } },
       { n: "03", k: "Iterations", t: "Simpler patient interactions, readiness checks, clearer confirmations, less cognitive load" }
     ],
     measure: [
