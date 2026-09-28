@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Abhishek Jha Case Studies</title>
+<meta name="description" content="Product and UX design case studies by Abhishek Jha.">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500&family=Space+Mono&display=swap">
+<style>
+:root{--ground:#F3F2EF;--surface:#FFFFFF;--ink:#141413;--ink2:#4F4E49;--muted:#8B8A83;--line:#DEDDD7;--accent:#E0541C;--peach:#F8E3D5;--peach-2:#F2B690;--shadow:0 40px 80px -40px rgba(38,28,18,.35),0 12px 24px -16px rgba(38,28,18,.2)}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--ground:#121211;--surface:#1B1B19;--ink:#F0EFEA;--ink2:#B7B6AF;--muted:#86857E;--line:#2E2E2A;--accent:#EE6934;--peach:#2B1E16;--peach-2:#6A3620;--shadow:0 40px 80px -40px rgba(0,0,0,.8)}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:"Satoshi","Hanken Grotesk",Arial,sans-serif;font-size:18px;line-height:1.6;padding-inline:clamp(16px,4vw,48px);padding-block:clamp(40px,8vw,96px)}
+.wrap{max-width:1240px;margin:0 auto;display:grid;gap:clamp(40px,6vw,72px)}
+.label{font-family:"Space Mono",monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{margin:0;font-weight:300;font-size:clamp(56px,10vw,132px);letter-spacing:-.05em;line-height:.92}
+p{margin:0;color:var(--ink2);max-width:34em;font-size:clamp(19px,2vw,23px);line-height:1.45}
+.card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:0;border-radius:28px;overflow:hidden;background:var(--surface);text-decoration:none;color:inherit;transition:transform .3s}
+.card:hover{transform:translateY(-4px)}
+.card .txt{padding:clamp(24px,4vw,48px);display:grid;gap:16px;align-content:space-between}
+.card h2{margin:0;font-weight:300;font-size:clamp(40px,5vw,64px);letter-spacing:-.04em;line-height:1}
+.card .vis{background:linear-gradient(150deg,var(--peach),var(--peach-2));padding:clamp(20px,4vw,48px) clamp(16px,4vw,48px) 0;display:flex;align-items:flex-end}
+.card img{display:block;width:100%;border-radius:12px 12px 0 0;box-shadow:var(--shadow)}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{padding:6px 13px;border-radius:999px;border:1px solid var(--line);font-size:13px;color:var(--ink2)}
+.go{display:inline-flex;gap:10px;align-items:center;font-weight:500;color:var(--accent)}
+@media (max-width:820px){.card{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header style="display:grid;gap:22px">
+    <span class="label">Abhishek Jha · Product and UX Designer</span>
+    <h1>Case studies</h1>
+    <p>Products I researched, designed and shipped, with the decisions behind them.</p>
+  </header>
+  <a class="card" href="germanly/">
+    <div class="txt">
+      <div style="display:grid;gap:14px">
+        <span class="label">01 · 2026</span>
+        <h2>Germanly</h2>
+        <p style="font-size:18px">A German learning product for international students and workers in Germany. 120+ learners, 3,000+ impressions on launch day.</p>
+        <div class="pills"><span class="pill">UX Research</span><span class="pill">Product Design</span><span class="pill">Design System</span><span class="pill">AI</span></div>
+      </div>
+      <span class="go">Read the case study <span aria-hidden="true">→</span></span>
+    </div>
+    <div class="vis"><img src="germanly/motion/landing_poster.webp" alt="Germanly landing page"></div>
+  </a>
+</main>
+</body>
+</html>
