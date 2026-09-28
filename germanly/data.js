@@ -373,6 +373,96 @@ window.GERMANLY = {
     real: true
   },
 
+  fieldwork: [
+    { src: "images/research/workshop_intro.webp", caption: "Opening the workshop", note: "Setting the scene before the first activity" },
+    { src: "images/research/workshop_cards.webp", caption: "Card sorting in small groups", note: "Participants grouped and ranked what they need from a learning tool" },
+    { src: "images/research/workshop_timer.webp", caption: "Timed rounds", note: "Two minute rounds kept each group moving and every voice heard" },
+    { src: "images/research/workshop_feedback.webp", caption: "Feedback on the live product", note: "What was confusing, if anything? asked with the product open on laptops" }
+  ],
+
+  toolkit: [
+    { method: "Desk research and competitive audit", why: "To check whether my frustration was personal or structural, and where Duolingo, tutors and free content each fall short.", output: "B1 is a legal requirement; price decides for most; no product joins a path, practice and exam readiness" },
+    { method: "Semi structured interviews", why: "Opinions are unreliable; the last real study session is not. I asked people to show me their setup.", output: "14 discovery interviews, then 40 pilot interviews (20 learners, before and after)" },
+    { method: "Co design workshop", why: "To watch learners reason together instead of alone. Short timed rounds kept every voice in the room.", output: "Card sorting, group discussion and a feedback round on the live product" },
+    { method: "Affinity mapping", why: "To turn interview notes into themes I could count instead of anecdotes I could cherry pick.", output: "Seven recurring themes, from fear of articles to abandoned subscriptions" },
+    { method: "Personas", why: "To keep three different deadlines in view: students, newcomer workers and people about to move.", output: "Three audience profiles with the goal, the deadline and the constraint" },
+    { method: "Information architecture", why: "Fourteen destinations had become a directory. Hick's law puts a readable nav at five to seven.", output: "Six destinations, reference grouped into tabs, every old URL kept" },
+    { method: "User flows", why: "To design the path a person walks, not screens in isolation, and to find where they drop.", output: "Activation, daily loop, lesson loop and free to paid flows" },
+    { method: "Prototyping", why: "To test ideas in hours instead of days, then build only the one that held up.", output: "Google Stitch explorations, Figma frames, then coded prototypes" },
+    { method: "Usability testing", why: "To watch where people hesitate. Think aloud surfaced the missing umlaut keys and the blank box problem.", output: "Findings that became decisions (c), (f) and (g)" },
+    { method: "Heuristic screen audit", why: "To replace it feels messy with numbers: controls, primary actions, progress, response.", output: "431 controls on one page versus 19 in the lesson" },
+    { method: "Product analytics", why: "What people do beats what they say. The database showed who started and who finished.", output: "8 of 101 learners had finished a lesson before the redesign" },
+    { method: "Pilot study", why: "To test the core bet, one payment and one path, with before and after measures.", output: "n = 20, Wilcoxon and Spearman, written up for CHI 2027" }
+  ],
+
+  ia: {
+    before: ["Today", "Path", "Lessons", "Words", "Flashcards", "Saved", "Phrases", "Sounds", "Notes", "Grammar", "Listening", "Writing", "Chat", "Tests"],
+    groups: [
+      { name: "Today", why: "One next step: due reviews, continue, recommendation", children: [] },
+      { name: "Lessons", why: "The A1 to B2 path", children: ["A1", "A2", "B1", "B2", "Units", "Lesson steps"] },
+      { name: "Library", why: "What people come for, one door with tabs", children: ["Words", "Phrases", "Saved", "Sounds"] },
+      { name: "Grammar", why: "Look up a rule twenty times", children: ["Topics", "Notes"] },
+      { name: "Practise", why: "Where learning is produced", children: ["Flashcards", "Listening", "Write", "Chat", "Tests"] },
+      { name: "Stories", why: "Reading for pleasure at your level", children: [] }
+    ],
+    corner: ["Profile", "Settings", "Upgrade", "Send feedback"],
+    rules: [
+      "Six destinations, down from fourteen. Past seven, people stop reading a nav and start hunting it.",
+      "Nothing was deleted. Words, Phrases, Saved and Sounds are four ways of browsing the same reference, so they became one door with four tabs.",
+      "Every URL stayed the same, so no link in an email, a lesson or onboarding broke.",
+      "On phones the bar shows four plus More, because five slots is what fits at 360px. Grammar and Stories are reference, not daily practice.",
+      "The nav hides during a lesson and returns at the end. Focus mode is part of the architecture."
+    ]
+  },
+
+  flows: [
+    { id: "first", name: "First visit to first win", who: "A cold visitor from a learner group", steps: ["Landing demo", "Learn one word", "Sign in with Google", "Why are you learning?", "Level and minutes a day", "Your plan", "Lesson 1", "Celebration", "Today"], note: "The corridor has one exit. The plan reveal leads into a lesson, never a dashboard, because a new learner needs the lesson, not the features." },
+    { id: "daily", name: "The daily loop", who: "A returning learner with ten minutes", steps: ["Email or home screen", "Today", "Review due words", "Continue lesson", "Lesson complete", "Recommendation", "Back to Today"], note: "Today always offers one primary action. The reminder email names something specific the learner did, never a generic nudge." },
+    { id: "lesson", name: "Inside a lesson", who: "Any learner, any level", steps: ["Words", "The rule", "Exercises", "Try again if wrong", "Write or say it", "Complete", "What next"], note: "A wrong answer loops back once with a hint, not a penalty. Complete offers three connections: shore up, go deeper, use it." },
+    { id: "pay", name: "Free to paid", who: "A learner who has had a win", steps: ["Locked lesson or set", "Upgrade band", "€19 once", "Stripe checkout", "Success", "Today, unlocked"], note: "The ask lands after a win, never before one. Payment mode, not subscription mode, so there is nothing to cancel." }
+  ],
+
+  style: {
+    colors: [
+      { group: "Surfaces", items: [["Canvas", "#0A0908", "Dark mode ground, faint warmth"], ["Surface", "#161514", "Cards one step above"], ["Paper", "#FAF9F7", "Light mode ground"], ["Today sage", "#CDD6CC", "The one tinted card on Today"]] },
+      { group: "Signal", items: [["Ink", "#FFFFFF", "Text on dark"], ["Blue", "#0099FF", "Links and focus only"], ["Success", "#30D158", "Correct answers"], ["Ember", "#FF3700", "Hero moments, from the ember gradient"]] },
+      { group: "Activity", items: [["Lessons", "#E8845C", "Lesson dots and progress"], ["Words", "#7FB0E8", "Vocabulary activity"], ["Grammar", "#B39AE0", "Grammar activity"], ["Reading", "#6FC2A4", "Reading activity"]] }
+    ],
+    type: [
+      { name: "Display XL", spec: "Satoshi 500 · 85 / 0.95 · tracking −4.25", size: 64, weight: 500, sample: "Guten Morgen" },
+      { name: "Display MD", spec: "Satoshi 500 · 32 / 1.13 · tracking −1", size: 32, weight: 500, sample: "Four chapters to A1" },
+      { name: "Headline", spec: "Switzer 700 · 22 / 1.2", size: 22, weight: 700, sample: "63 words are ready for review" },
+      { name: "Body", spec: "Switzer 400 · 15 / 1.3", size: 15, weight: 400, sample: "These are scheduled for today because today is when you are about to forget them." },
+      { name: "Caption", spec: "Switzer 500 · 13 / 1.2", size: 13, weight: 500, sample: "Last four weeks · 7 days" }
+    ],
+    spacing: [4, 8, 12, 15, 20, 30, 40, 96],
+    radius: [["xs", 4], ["sm", 6], ["md", 10], ["lg", 15], ["xl", 20], ["xxl", 30], ["pill", 100]],
+    motion: [
+      { name: "Press", value: "160ms", use: "Buttons and taps" },
+      { name: "Settle", value: "250ms", use: "Cards, reveals" },
+      { name: "Reveal", value: "600ms", use: "Page and panel entrances" },
+      { name: "Easing", value: "cubic bezier (0.23, 1, 0.32, 1)", use: "One curve for everything" }
+    ],
+    voice: [
+      { do: "Nothing expired. Every word you learned is still marked as learned.", dont: "Don't lose your streak! Come back now." },
+      { do: "34 words are ready for you.", dont: "Keep learning!" },
+      { do: "Not that one. Look at the examples again.", dont: "Wrong answer." },
+      { do: "€19 once. Not €19 a month.", dont: "Unlock Premium today, limited offer!" }
+    ]
+  },
+
+  stack: [
+    { layer: "Web app", tool: "Next.js on Vercel", why: "Server rendering for fast first loads and SEO on the free guides, one deploy per push" },
+    { layer: "Auth", tool: "Supabase Auth with Google", why: "One tap sign in on a phone; every extra field cost visitors" },
+    { layer: "Data", tool: "Supabase Postgres with Row Level Security", why: "Each learner can only read their own rows, enforced by the database, not by the interface" },
+    { layer: "AI", tool: "Groq LLM behind eight API routes", why: "Fast enough for a conversation to feel live; rate limited so the free tier stays affordable" },
+    { layer: "Payments", tool: "Stripe Checkout in payment mode", why: "No subscription object exists, so no auto renewal is true in the system, not just the copy" },
+    { layer: "Email", tool: "Resend with a daily cron", why: "Lifecycle emails tied to what a learner did, logged so nobody gets the same email twice" },
+    { layer: "Insight", tool: "Vercel Analytics and product tables", why: "Where people drop, measured instead of guessed" }
+  ],
+
+  request: ["You tap Get feedback", "The page sends your sentence and level", "The server checks your session and daily limit", "Groq returns structured JSON", "The page renders a diff with at most two rules", "Your attempt is saved to your history"],
+
   learnings: [
     { title: "Being the user is a head start, not research", body: "My first plan was built on my own assumptions. Fourteen conversations cut the scope in half and changed the business model." },
     { title: "Measure the interface", body: "Counting controls and primary actions turned it feels messy into a fix I could ship in a day." },
