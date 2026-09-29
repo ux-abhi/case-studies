@@ -23,6 +23,16 @@
       "destination": "/oncarea/$1"
     },
     {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "bnz.uxabhi.com"
+        }
+      ],
+      "destination": "/bnz/$1"
+    },
+    {
       "source": "/",
       "destination": "/cases/"
     }
